@@ -1,0 +1,15 @@
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.GeneratedMSBuildEditorConfig.editorconfig
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.AssemblyInfoInputs.cache
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.AssemblyInfo.cs
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.csproj.CoreCompileInputs.cache
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.sourcelink.json
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\bin\Debug\net8.0\STUDY.Personal.SnakeGame.exe
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\bin\Debug\net8.0\STUDY.Personal.SnakeGame.deps.json
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\bin\Debug\net8.0\STUDY.Personal.SnakeGame.runtimeconfig.json
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\bin\Debug\net8.0\STUDY.Personal.SnakeGame.dll
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\bin\Debug\net8.0\STUDY.Personal.SnakeGame.pdb
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.dll
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\refint\STUDY.Personal.SnakeGame.dll
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.pdb
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.genruntimeconfig.cache
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\ref\STUDY.Personal.SnakeGame.dll

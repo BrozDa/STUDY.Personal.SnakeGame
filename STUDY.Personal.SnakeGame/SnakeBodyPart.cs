@@ -8,15 +8,17 @@ namespace STUDY.Personal.SnakeGame
 {
     internal class SnakeBodyPart
     {
-        (int x , int y) BodyPart;
+        public int xCoord { get; set; }
+        public int yCoord { get; set; }
 
-        public SnakeBodyPart((int, int) coords)
+        public SnakeBodyPart(int x, int y)
         {
-            BodyPart = coords;
+            xCoord = x;
+            yCoord = y;
         }
         public override string ToString()
         {
-            return new string($"x: {BodyPart.x}, y: {BodyPart.y}");
+            return new string($"x: {xCoord}, y: {yCoord}");
         }
     }
 }

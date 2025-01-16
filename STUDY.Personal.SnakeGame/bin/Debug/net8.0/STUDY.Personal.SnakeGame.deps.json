@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "STUDY.Personal.SnakeGame/1.0.0": {
+        "runtime": {
+          "STUDY.Personal.SnakeGame.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "STUDY.Personal.SnakeGame/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
