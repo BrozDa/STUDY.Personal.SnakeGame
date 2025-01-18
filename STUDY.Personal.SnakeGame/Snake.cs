@@ -48,58 +48,32 @@ namespace STUDY.Personal.SnakeGame
 
 
         }
+
+
+        public void UpdateSnake()
+        {
+            UpdateSnakeDirection();
+
+            SnakeBodyPart newHead = CalculateNewHeadPosition(currentDirection);
+
+            if (ValidateNewHeadPosition(newHead)) {
+                SnakeBody.Insert(0, newHead);
+                SnakeBody.RemoveAt(SnakeBody.Count - 1);
+
+                SnakeHead = SnakeBody[0];
+                SnakeTail = SnakeBody[SnakeBody.Count - 1];
+            }
+            else
+            {
+                Console.WriteLine("You Ded");
+            }
+
+        }
         public void UpdateSnakeDirection()
         {
             currentDirection = inputManager.ProcessUserInput();
         }
-
-
-        public void PrintSnake(char _snakeCharacter)
-        {
-            
-            UpdateSnakeDirection();
-
-            //new variables for head and tail
-            SnakeBodyPart newHead = CalculateNewHeadPosition(currentDirection);
-            SnakeBodyPart currentTail = SnakeTail;
-
-            // remove tail from screen
-            Console.SetCursorPosition(SnakeTail.xCoord, SnakeTail.yCoord);
-            Console.Write(" ");
-
-            //add new head to SnakeBody
-            UpdateHead(newHead);
-
-            // update tail:
-            SnakeTail = SnakeBody[SnakeBody.Count - 1];
-
-            //print head
-            Console.SetCursorPosition(SnakeHead.xCoord, SnakeHead.yCoord);
-            Console.Write(headCharacter);
-
-            //print rest of the snake
-            for (int i = 1; i < SnakeBody.Count; i++) { 
-                int x = SnakeBody[i].xCoord;
-                int y = SnakeBody[i].yCoord;
-                Console.SetCursorPosition(x, y);
-                Console.Write(bodyCharacter);
-            }
-
-        }
-        public void UpdateHead(SnakeBodyPart newHeadPosition)
-        {
-            if (ValidateNewHeadPosition(newHeadPosition)){
-                SnakeBody.Insert(0, newHeadPosition);
-                SnakeBody.RemoveAt(SnakeBody.Count - 1);
-                SnakeHead = newHeadPosition;
-            }
-            else
-            {
-                Console.WriteLine("YA DED");
-            }
-            
-           
-        }
+      
         public SnakeBodyPart CalculateNewHeadPosition(Direction direction)
         {
             SnakeBodyPart newHead = new SnakeBodyPart(SnakeHead.xCoord, SnakeHead.yCoord);
@@ -133,6 +107,14 @@ namespace STUDY.Personal.SnakeGame
         public List<SnakeBodyPart> GetSnakeBody()
         {
             return this.SnakeBody;
+        }
+        public char GetSnakeHeadCharacter()
+        {
+            return headCharacter;
+        }
+        public char GetSnakeBodyCharacter()
+        {
+            return bodyCharacter;
         }
     }
 }

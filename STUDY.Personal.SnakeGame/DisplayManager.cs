@@ -25,5 +25,34 @@ namespace STUDY.Personal.SnakeGame
             Console.SetCursorPosition(apple.xCoord, apple.yCoord);
             Console.Write(apple.appleCharacter);
         }
+
+        public static void PrintSnake(Snake snake) {
+            List<SnakeBodyPart> snakeBody = snake.GetSnakeBody();
+
+            RemoveTailFromScreen(snakeBody[snakeBody.Count-1]);
+
+            char headCharacter = snake.GetSnakeHeadCharacter();
+            char bodyCharacter = snake.GetSnakeBodyCharacter();
+
+
+            
+
+            Console.SetCursorPosition(snakeBody[0].xCoord, snakeBody[0].yCoord);
+            Console.Write(headCharacter);
+
+            for (int i = 1; i < snakeBody.Count; i++)
+            {
+                int x = snakeBody[i].xCoord;
+                int y = snakeBody[i].yCoord;
+                Console.SetCursorPosition(x, y);
+                Console.Write(bodyCharacter);
+            }
+        }
+        public static void RemoveTailFromScreen(SnakeBodyPart tail)
+        {
+     
+            Console.SetCursorPosition(tail.xCoord+1, tail.yCoord);
+            Console.Write("");
+        }
     }
 }

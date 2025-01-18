@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace STUDY.Personal.SnakeGame
 {
@@ -36,17 +37,26 @@ namespace STUDY.Personal.SnakeGame
             _timer = new System.Timers.Timer();
             
         }
-        public void PlayGame()
+        
+        public void SetupNewGame()
         {
             SetupTimer(_timerTick);
             DisplayManager.PrintGameBorder(gameBoard);
 
             apple.GenerateNewApple(gameBoard, snake);
             DisplayManager.PrintApple(apple);
-            snake.PrintSnake(_snakeChar);
-            while (snakeAlive) { 
-                
+
+
+        }
+        public void PlayGame()
+        {
+            SetupNewGame();
+            DisplayManager.PrintSnake(snake);
+
+            while (snakeAlive)
+            {
             }
+
         }
         public void SetupTimer(int timerTick)
         {
@@ -54,10 +64,18 @@ namespace STUDY.Personal.SnakeGame
             _timer.Enabled = true;
             _timer.AutoReset = true;
             _timer.Interval = timerTick;
-            _timer.Elapsed += new System.Timers.ElapsedEventHandler(delegate { snake.PrintSnake(_snakeChar);});
-
+            _timer.Elapsed += GameTick;
             
+
         }
-        
+
+        private void GameTick(object? sender, ElapsedEventArgs e)
+        {
+            snake.UpdateSnakeDirection();
+            snake.UpdateSnake();
+            DisplayManager.PrintSnake(snake);
+        }
+
+
     }
 }
