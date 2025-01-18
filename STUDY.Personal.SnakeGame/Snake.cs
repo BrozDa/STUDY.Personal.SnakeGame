@@ -73,7 +73,8 @@ namespace STUDY.Personal.SnakeGame
         {
             currentDirection = inputManager.ProcessUserInput();
         }
-      
+       
+
         public SnakeBodyPart CalculateNewHeadPosition(Direction direction)
         {
             SnakeBodyPart newHead = new SnakeBodyPart(SnakeHead.xCoord, SnakeHead.yCoord);

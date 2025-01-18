@@ -51,7 +51,7 @@ namespace STUDY.Personal.SnakeGame
         public static void RemoveTailFromScreen(SnakeBodyPart tail)
         {
      
-            Console.SetCursorPosition(tail.xCoord+1, tail.yCoord);
+            Console.SetCursorPosition(tail.xCoord, tail.yCoord);
             Console.Write("");
         }
     }
