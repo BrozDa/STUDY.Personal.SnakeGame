@@ -5,6 +5,7 @@
         static void Main(string[] args)
         {
             SnakeGame game = new SnakeGame();
+            game.PlayGame();
             Console.ReadLine(); 
         }
     }
