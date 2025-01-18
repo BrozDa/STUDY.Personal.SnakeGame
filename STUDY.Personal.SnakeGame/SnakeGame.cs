@@ -13,6 +13,9 @@ namespace STUDY.Personal.SnakeGame
         private readonly char _snakeChar = '@';
         private GameBoard gameBoard { get; set; }
         private Snake snake { get; set; }
+
+        private Apple apple;
+
         private Direction defaultDirection = Direction.Right;
 
         private InputManager inputManager { get; set; }
@@ -22,21 +25,25 @@ namespace STUDY.Personal.SnakeGame
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            gameBoard = new GameBoard();
-            gameBoard.PrintBorder();
+            gameBoard = new GameBoard(50,20,'#');
 
             inputManager = new InputManager(defaultDirection);
-
-            snake = new Snake(gameBoard, inputManager, defaultDirection);
-            snake.PrintSnake(_snakeChar);
-
             
+            snake = new Snake(gameBoard, inputManager, defaultDirection);
 
+            apple = new Apple();
+            
             _timer = new System.Timers.Timer();
-            SetupTimer(_timerTick);
+            
         }
         public void PlayGame()
         {
+            SetupTimer(_timerTick);
+            DisplayManager.PrintGameBorder(gameBoard);
+
+            apple.GenerateNewApple(gameBoard, snake);
+            DisplayManager.PrintApple(apple);
+            snake.PrintSnake(_snakeChar);
             while (snakeAlive) { 
                 
             }

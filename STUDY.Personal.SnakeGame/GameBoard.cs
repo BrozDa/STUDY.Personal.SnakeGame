@@ -8,29 +8,20 @@ namespace STUDY.Personal.SnakeGame
 {
     internal class GameBoard
     {
-        public readonly int _width = 50;
-        public readonly int _height = 20;
-        private readonly char _borderCharacter = '#';
+        //public int Width = 50;
+        //public int Height = 20;
+        //private char BorderCharacter = '#';
 
-        public int[][] gameboard { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public char BorderCharacter { get; set; }
 
-        public GameBoard()
+
+        public GameBoard(int width, int height, char borderCharacter)
         {
-        }
-        public void PrintBorder()
-        {
-            StringBuilder board = new StringBuilder();
-            board.Append(new string(_borderCharacter, _width) + '\n');
-            for (int i = 1; i < _height - 1; i++)
-            {
-                board.Append(_borderCharacter);
-                board.Append(new string(' ', _width - 2));
-                board.Append(_borderCharacter);
-                board.Append('\n');
-            }
-            board.Append(new string(_borderCharacter, _width) + '\n');
-
-            Console.WriteLine(board.ToString());
+            Width = width;
+            Height = height;
+            BorderCharacter = borderCharacter;
         }
     }
 }

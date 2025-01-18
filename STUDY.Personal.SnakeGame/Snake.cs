@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace STUDY.Personal.SnakeGame
         private SnakeBodyPart SnakeHead { get; set; }
         private SnakeBodyPart SnakeTail { get; set; }
 
+        
         public Direction currentDirection { get; set; }
 
 
@@ -34,24 +36,33 @@ namespace STUDY.Personal.SnakeGame
             SnakeBody = [new(xStartingCoord,yStartingCoord), new(xStartingCoord-1, yStartingCoord), new(xStartingCoord-2, yStartingCoord),];
             SnakeHead = SnakeBody[0];
             SnakeTail = SnakeBody[SnakeBody.Count - 1];
-            boardWidth = board._width;
-            boardHeight = board._height;
+
+
+            boardWidth = board.Width;
+            boardHeight = board.Height;
+
             currentDirection = direction;   
+
             this.inputManager = inputManager;
 
 
-        }
-        public void UpdateSnake()
-        {
 
         }
-        public void PrintSnake(char _snakeCharacter)
+        public void UpdateSnakeDirection()
         {
             currentDirection = inputManager.ProcessUserInput();
+        }
+
+
+        public void PrintSnake(char _snakeCharacter)
+        {
+            
+            UpdateSnakeDirection();
 
             //new variables for head and tail
             SnakeBodyPart newHead = CalculateNewHeadPosition(currentDirection);
             SnakeBodyPart currentTail = SnakeTail;
+
             // remove tail from screen
             Console.SetCursorPosition(SnakeTail.xCoord, SnakeTail.yCoord);
             Console.Write(" ");
@@ -118,6 +129,10 @@ namespace STUDY.Personal.SnakeGame
             return ((newHeadPosition.xCoord > 0 && newHeadPosition.xCoord < boardWidth)
                 && (newHeadPosition.yCoord > 0 && newHeadPosition.yCoord < boardHeight));
 
+        }
+        public List<SnakeBodyPart> GetSnakeBody()
+        {
+            return this.SnakeBody;
         }
     }
 }
