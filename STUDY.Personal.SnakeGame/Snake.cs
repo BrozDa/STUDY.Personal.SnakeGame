@@ -52,9 +52,12 @@ namespace STUDY.Personal.SnakeGame
 
         public void UpdateSnake()
         {
+            
             UpdateSnakeDirection();
 
             SnakeBodyPart newHead = CalculateNewHeadPosition(currentDirection);
+
+            DisplayManager.RemoveTailFromScreen(SnakeTail);
 
             if (ValidateNewHeadPosition(newHead)) {
                 SnakeBody.Insert(0, newHead);
@@ -68,10 +71,32 @@ namespace STUDY.Personal.SnakeGame
                 Console.WriteLine("You Ded");
             }
 
+            
+
+
         }
         public void UpdateSnakeDirection()
         {
-            currentDirection = inputManager.ProcessUserInput();
+            Direction newDirection = inputManager.ProcessUserInput();
+            currentDirection = ValidateNewDirection(currentDirection, newDirection);
+        }
+
+        //to make sure snake cant do 180
+        public Direction ValidateNewDirection(Direction currentDirection, Direction newDirection)
+        {
+            if(currentDirection == Direction.Up && newDirection == Direction.Down)
+                newDirection = currentDirection;
+
+            if (currentDirection == Direction.Down && newDirection == Direction.Up)
+                newDirection = currentDirection;
+
+            if (currentDirection == Direction.Left && newDirection == Direction.Right)
+                newDirection = currentDirection;
+
+            if (currentDirection == Direction.Right && newDirection == Direction.Left)
+                newDirection = currentDirection;
+
+            return newDirection;
         }
        
 
@@ -101,8 +126,8 @@ namespace STUDY.Personal.SnakeGame
         }
         public bool ValidateNewHeadPosition(SnakeBodyPart newHeadPosition)
         {
-            return ((newHeadPosition.xCoord > 0 && newHeadPosition.xCoord < boardWidth)
-                && (newHeadPosition.yCoord > 0 && newHeadPosition.yCoord < boardHeight));
+            return ((newHeadPosition.xCoord > 0 && newHeadPosition.xCoord < boardWidth-1)
+                && (newHeadPosition.yCoord > 0 && newHeadPosition.yCoord < boardHeight-1));
 
         }
         public List<SnakeBodyPart> GetSnakeBody()
@@ -116,6 +141,10 @@ namespace STUDY.Personal.SnakeGame
         public char GetSnakeBodyCharacter()
         {
             return bodyCharacter;
+        }
+        public SnakeBodyPart GetSnakeHead()
+        {
+            return this.SnakeHead;
         }
     }
 }

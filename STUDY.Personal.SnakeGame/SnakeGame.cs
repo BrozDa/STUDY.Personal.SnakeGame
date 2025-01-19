@@ -71,9 +71,21 @@ namespace STUDY.Personal.SnakeGame
 
         private void GameTick(object? sender, ElapsedEventArgs e)
         {
+            
             snake.UpdateSnakeDirection();
             snake.UpdateSnake();
+
+            
+            if(CompareHeadAndApplePositions(apple, snake.GetSnakeHead())){
+                apple.GenerateNewApple(gameBoard, snake);
+                DisplayManager.PrintApple(apple);
+            }
+
             DisplayManager.PrintSnake(snake);
+        }
+        private bool CompareHeadAndApplePositions(Apple apple, SnakeBodyPart snakeHead)
+        {
+            return apple.xCoord == snakeHead.xCoord && apple.yCoord == snakeHead.yCoord;
         }
 
 

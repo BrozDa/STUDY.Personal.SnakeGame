@@ -52,7 +52,7 @@ namespace STUDY.Personal.SnakeGame
         {
      
             Console.SetCursorPosition(tail.xCoord, tail.yCoord);
-            Console.Write("");
+            Console.Write(" ");
         }
     }
 }

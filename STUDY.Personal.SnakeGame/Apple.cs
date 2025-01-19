@@ -23,8 +23,8 @@ namespace STUDY.Personal.SnakeGame
             
             do
             {
-                xCoord = random.Next(1, board.Width);
-                yCoord = random.Next(1, board.Height);
+                xCoord = random.Next(1, board.Width-1);
+                yCoord = random.Next(1, board.Height-1);
 
             } while (!CheckIfValidPositionForApple(xCoord, yCoord, snake));
     

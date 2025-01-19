@@ -8,9 +8,6 @@ namespace STUDY.Personal.SnakeGame
 {
     internal class GameBoard
     {
-        //public int Width = 50;
-        //public int Height = 20;
-        //private char BorderCharacter = '#';
 
         public int Width { get; set; }
         public int Height { get; set; }
