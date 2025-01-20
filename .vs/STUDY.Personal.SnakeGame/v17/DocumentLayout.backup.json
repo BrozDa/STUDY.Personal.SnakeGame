@@ -175,9 +175,15 @@
               "Title": "SnakeGame.cs",
               "DocumentMoniker": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\SnakeGame.cs",
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\SnakeGame.cs",
+<<<<<<< Updated upstream
               "ToolTip": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\SnakeGame.cs",
               "RelativeToolTip": "STUDY.Personal.SnakeGame\\SnakeGame.cs",
               "ViewState": "AgIAAD4AAAAAAAAAAAAuwFYAAAA5AAAAAAAAAA==",
+=======
+              "ToolTip": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\SnakeGame.cs*",
+              "RelativeToolTip": "STUDY.Personal.SnakeGame\\SnakeGame.cs*",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAuwGUAAAAtAAAAAAAAAA==",
+>>>>>>> Stashed changes
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-16T14:10:20.086Z",
               "EditorCaption": ""
@@ -190,7 +196,11 @@
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\Snake.cs",
               "ToolTip": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\Snake.cs*",
               "RelativeToolTip": "STUDY.Personal.SnakeGame\\Snake.cs*",
+<<<<<<< Updated upstream
               "ViewState": "AgIAAG8AAAAAAAAAAAAkwIkAAAAuAAAAAAAAAA==",
+=======
+              "ViewState": "AgIAACkAAAAAAAAAAAAuwDgAAAAMAAAAAAAAAA==",
+>>>>>>> Stashed changes
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-16T13:39:26.277Z",
               "EditorCaption": ""
