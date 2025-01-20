@@ -27,7 +27,7 @@ namespace STUDY.Personal.SnakeGame
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            gameBoard = new GameBoard(50,20,'#');
+            gameBoard = new GameBoard(100,20,'#');
 
             inputManager = new InputManager(defaultDirection);
             
@@ -57,7 +57,7 @@ namespace STUDY.Personal.SnakeGame
 
             while (snakeAlive)
             {
-                //gameongoing
+                
             }
 
             Console.SetCursorPosition(0, 0);    
