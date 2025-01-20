@@ -22,11 +22,15 @@ namespace STUDY.Personal.SnakeGame
         }
 
         public static void PrintApple(Apple apple) {
+            Console.ForegroundColor = ConsoleColor.Red; 
             Console.SetCursorPosition(apple.xCoord, apple.yCoord);
             Console.Write(apple.appleCharacter);
+            Console.ResetColor();   
         }
 
         public static void PrintSnake(Snake snake) {
+
+            Console.ForegroundColor = ConsoleColor.Green;
             List<SnakeBodyPart> snakeBody = snake.GetSnakeBody();
 
            // RemoveTailFromScreen(snakeBody[snakeBody.Count-1]);
@@ -47,6 +51,7 @@ namespace STUDY.Personal.SnakeGame
                 Console.SetCursorPosition(x, y);
                 Console.Write(bodyCharacter);
             }
+            Console.ResetColor();
         }
         public static void RemoveTailFromScreen(SnakeBodyPart tail)
         {
