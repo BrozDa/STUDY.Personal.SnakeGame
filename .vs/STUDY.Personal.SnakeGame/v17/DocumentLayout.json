@@ -3,37 +3,26 @@
   "WorkspaceRootPath": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\snake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\snake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\snakegame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\snakegame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\snake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\snake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\displaymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\displaymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\gameboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\snake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\snake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\snakebodypart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\snakebodypart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-=======
->>>>>>> Stashed changes
       "AbsoluteMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|e:\\git repos\\study.personal.snakegame\\study.personal.snakegame\\apple.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{94FDF5FA-B084-4ECF-AA63-7F7764DB23D3}|STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame.csproj|solutionrelative:study.personal.snakegame\\apple.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -49,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 22,
+          "SelectedChildIndex": 21,
           "Children": [
             {
               "$type": "Bookmark",
@@ -116,7 +105,6 @@
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-<<<<<<< Updated upstream
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "SnakeBodyPart.cs",
@@ -124,18 +112,14 @@
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\SnakeBodyPart.cs",
               "ToolTip": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\SnakeBodyPart.cs",
               "RelativeToolTip": "STUDY.Personal.SnakeGame\\SnakeBodyPart.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-20T14:15:40.417Z",
               "EditorCaption": ""
-=======
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
->>>>>>> Stashed changes
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Apple.cs",
               "DocumentMoniker": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\Apple.cs",
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\Apple.cs",
@@ -148,7 +132,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\Program.cs",
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\Program.cs",
@@ -161,32 +145,20 @@
             },
             {
               "$type": "Document",
-<<<<<<< Updated upstream
-              "DocumentIndex": 2,
-=======
-              "DocumentIndex": 3,
->>>>>>> Stashed changes
+              "DocumentIndex": 1,
               "Title": "DisplayManager.cs",
               "DocumentMoniker": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\DisplayManager.cs",
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\DisplayManager.cs",
               "ToolTip": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\DisplayManager.cs",
               "RelativeToolTip": "STUDY.Personal.SnakeGame\\DisplayManager.cs",
-<<<<<<< Updated upstream
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAANAAAAAAAAAA==",
-=======
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAAcAAAAAAAAAA==",
->>>>>>> Stashed changes
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-18T17:48:07.247Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-<<<<<<< Updated upstream
-              "DocumentIndex": 3,
-=======
-              "DocumentIndex": 1,
->>>>>>> Stashed changes
+              "DocumentIndex": 2,
               "Title": "GameBoard.cs",
               "DocumentMoniker": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\GameBoard.cs",
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\GameBoard.cs",
@@ -199,40 +171,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "SnakeGame.cs",
               "DocumentMoniker": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\SnakeGame.cs",
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\SnakeGame.cs",
               "ToolTip": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\SnakeGame.cs",
               "RelativeToolTip": "STUDY.Personal.SnakeGame\\SnakeGame.cs",
-<<<<<<< Updated upstream
-              "ViewState": "AgIAAD4AAAAAAAAAAAAuwFYAAAA5AAAAAAAAAA==",
-=======
-              "ViewState": "AgIAAD4AAAAAAAAAAAAuwGUAAAAtAAAAAAAAAA==",
->>>>>>> Stashed changes
+              "ViewState": "AgIAADMAAAAAAAAAAAA4wFgAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-16T14:10:20.086Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-<<<<<<< Updated upstream
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Snake.cs",
               "DocumentMoniker": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\Snake.cs",
               "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\Snake.cs",
               "ToolTip": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\Snake.cs",
               "RelativeToolTip": "STUDY.Personal.SnakeGame\\Snake.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAAwFYAAAATAAAAAAAAAA==",
-=======
-              "DocumentIndex": 0,
-              "Title": "Snake.cs",
-              "DocumentMoniker": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\Snake.cs",
-              "RelativeDocumentMoniker": "STUDY.Personal.SnakeGame\\Snake.cs",
-              "ToolTip": "E:\\Git Repos\\STUDY.Personal.SnakeGame\\STUDY.Personal.SnakeGame\\Snake.cs*",
-              "RelativeToolTip": "STUDY.Personal.SnakeGame\\Snake.cs*",
-              "ViewState": "AgIAACkAAAAAAAAAAAAuwE4AAAAoAAAAAAAAAA==",
->>>>>>> Stashed changes
+              "ViewState": "AgIAACQAAAAAAAAAAAAYwD4AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-16T13:39:26.277Z",
               "EditorCaption": ""
