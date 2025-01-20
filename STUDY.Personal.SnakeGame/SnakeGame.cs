@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -9,7 +10,7 @@ namespace STUDY.Personal.SnakeGame
 {
     internal class SnakeGame
     {
-        private readonly int _timerTick = 1000;
+        private readonly int _timerTick = 200;
         private System.Timers.Timer _timer;
         private readonly char _snakeChar = '@';
         private GameBoard gameBoard { get; set; }
@@ -66,52 +67,38 @@ namespace STUDY.Personal.SnakeGame
             _timer.Interval = timerTick;
             _timer.Elapsed += GameTick;
             
-
+           
         }
 
         private void GameTick(object? sender, ElapsedEventArgs e)
         {
-            
+            //check user input for direction
             snake.UpdateSnakeDirection();
 
-            //check if apple is on next position
-            //if yes then insert new head to the start and generate new appl
-            //if not then continue
-
-            //NEW CODE
-            /*SnakeBodyPart newHead = snake.CalculateNewHeadPosition(snake.currentDirection);
-            if(CompareHeadAndApplePositions(apple, newHead))
-            {
-                snake.InsertNewHead(newHead);
-                
-            }
-            CheckForApple(apple, newHead);*/
-
-            //OLD CODE
+            //calculate new position for head of the snake
             SnakeBodyPart newHead = snake.CalculateNewHeadPosition(snake.currentDirection);
-            CheckForApple(apple, newHead);
 
-            snake.UpdateSnake();
+            //check if the apple was eaten - eg position of head == position of apple
+            bool appleEaten = CompareHeadAndApplePositions(apple, newHead);
 
-            //check if apple was eaten
-            if(CompareHeadAndApplePositions(apple, snake.GetSnakeHead())){
+            //if apple was eaten then we need to generate and print new apple
+            if (appleEaten)
+            {
                 apple.GenerateNewApple(gameBoard, snake);
                 DisplayManager.PrintApple(apple);
             }
+            //update snake with position of head
+            //if apple was eaten then we do not remove tail
+            snake.UpdateSnake(newHead, appleEaten);
 
+            //print the snake
             DisplayManager.PrintSnake(snake);
         }
         private bool CompareHeadAndApplePositions(Apple apple, SnakeBodyPart snakeHead)
         {
             return apple.xCoord == snakeHead.xCoord && apple.yCoord == snakeHead.yCoord;
         }
-        private void CheckForApple(Apple apple, SnakeBodyPart newHead)
-        {
-            if(CompareHeadAndApplePositions(apple, newHead))
-            {
-              snake.InsertNewHead(newHead);
-            }
-        }
+        
 
 
     }

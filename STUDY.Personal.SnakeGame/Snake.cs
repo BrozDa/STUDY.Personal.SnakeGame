@@ -51,24 +51,38 @@ namespace STUDY.Personal.SnakeGame
 
         }
 
-
-        public void UpdateSnake()
+        public void UpdateSnake(SnakeBodyPart newHead, bool appleEaten)
         {
-            SnakeBodyPart newHead = CalculateNewHeadPosition(currentDirection);
-
-            DisplayManager.RemoveTailFromScreen(SnakeTail);
-
-            if (ValidateNewHeadPosition(newHead)) {
+            if (appleEaten)
+            {
+                //just replace apple character with head
+                //tail stays where it is because snake was lengtened
+                //no need to check if new position is not wall because apple will always be on valid positions
                 SnakeBody.Insert(0, newHead);
-                SnakeBody.RemoveAt(SnakeBody.Count - 1);
-
-                SnakeHead = SnakeBody[0];
-                SnakeTail = SnakeBody[SnakeBody.Count - 1];
+                SnakeHead = newHead;
             }
             else
             {
-                Console.WriteLine("You Ded");
+                DisplayManager.RemoveTailFromScreen(SnakeTail);
+
+                //need to check if new head position is valid - no wall
+                if (ValidateNewHeadPosition(newHead))
+                {
+                    //if yes then we need to place new head at the start of the list
+                    SnakeBody.Insert(0, newHead);
+                    //remove tail
+                    SnakeBody.RemoveAt(SnakeBody.Count - 1);
+
+                    //update head and tail 
+                    SnakeHead = newHead;
+                    SnakeTail = SnakeBody[SnakeBody.Count - 1];
+                }
+                else
+                {
+                    Console.WriteLine("You Ded");
+                }
             }
+            
         }
         public void UpdateSnakeDirection()
         {
@@ -121,9 +135,21 @@ namespace STUDY.Personal.SnakeGame
         }
         public bool ValidateNewHeadPosition(SnakeBodyPart newHeadPosition)
         {
-            return ((newHeadPosition.xCoord > 0 && newHeadPosition.xCoord < boardWidth-1)
-                && (newHeadPosition.yCoord > 0 && newHeadPosition.yCoord < boardHeight-1));
-
+            return NotInWall(newHeadPosition) && NotEatenHimself(newHeadPosition);
+        }
+        private bool NotInWall(SnakeBodyPart newHeadPosition)
+        {
+            return ((newHeadPosition.xCoord > 0 && newHeadPosition.xCoord < boardWidth - 1)
+                && (newHeadPosition.yCoord > 0 && newHeadPosition.yCoord < boardHeight - 1));
+        }
+        private bool NotEatenHimself(SnakeBodyPart newHeadPosition)
+        {
+            foreach(SnakeBodyPart bodyPart in SnakeBody)
+            {
+                if (bodyPart.Equals(newHeadPosition))
+                    return false;
+            }
+            return true;
         }
         public List<SnakeBodyPart> GetSnakeBody()
         {
