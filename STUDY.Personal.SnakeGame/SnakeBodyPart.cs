@@ -20,5 +20,18 @@ namespace STUDY.Personal.SnakeGame
         {
             return new string($"x: {xCoord}, y: {yCoord}");
         }
+        public override bool Equals(object? obj)
+        {
+            if(obj == null) return false;
+
+            SnakeBodyPart? other = obj as SnakeBodyPart;
+            if(other == null) return false;
+
+            return Equals(other);
+        }
+        private bool Equals(SnakeBodyPart other) { 
+           
+            return this.xCoord == other.xCoord && this.yCoord == other.yCoord;
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace STUDY.Personal.SnakeGame
         public static void PrintSnake(Snake snake) {
             List<SnakeBodyPart> snakeBody = snake.GetSnakeBody();
 
-            RemoveTailFromScreen(snakeBody[snakeBody.Count-1]);
+           // RemoveTailFromScreen(snakeBody[snakeBody.Count-1]);
 
             char headCharacter = snake.GetSnakeHeadCharacter();
             char bodyCharacter = snake.GetSnakeBodyCharacter();
