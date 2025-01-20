@@ -53,11 +53,12 @@ namespace STUDY.Personal.SnakeGame
 
         public void UpdateSnake(SnakeBodyPart newHead, bool appleEaten)
         {
+            //only valid position are being passed from GameTick
+
             if (appleEaten)
             {
                 //just replace apple character with head
                 //tail stays where it is because snake was lengtened
-                //no need to check if new position is not wall because apple will always be on valid positions
                 SnakeBody.Insert(0, newHead);
                 SnakeHead = newHead;
             }
@@ -65,22 +66,15 @@ namespace STUDY.Personal.SnakeGame
             {
                 DisplayManager.RemoveTailFromScreen(SnakeTail);
 
-                //need to check if new head position is valid - no wall
-                if (ValidateNewHeadPosition(newHead))
-                {
-                    //if yes then we need to place new head at the start of the list
-                    SnakeBody.Insert(0, newHead);
-                    //remove tail
-                    SnakeBody.RemoveAt(SnakeBody.Count - 1);
+                //if yes then we need to place new head at the start of the list
+                SnakeBody.Insert(0, newHead);
+                //remove tail
+                SnakeBody.RemoveAt(SnakeBody.Count - 1);
 
-                    //update head and tail 
-                    SnakeHead = newHead;
-                    SnakeTail = SnakeBody[SnakeBody.Count - 1];
-                }
-                else
-                {
-                    Console.WriteLine("You Ded");
-                }
+                //update head and tail 
+                SnakeHead = newHead;
+                SnakeTail = SnakeBody[SnakeBody.Count - 1];
+
             }
             
         }
