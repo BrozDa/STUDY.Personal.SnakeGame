@@ -33,7 +33,9 @@ namespace STUDY.Personal.SnakeGame
 
         public Snake(GameBoard board, InputManager inputManager, Direction direction)
         {
-            SnakeBody = [new(xStartingCoord,yStartingCoord), new(xStartingCoord-1, yStartingCoord), new(xStartingCoord-2, yStartingCoord),];
+            xStartingCoord = board.Width / 2;
+            yStartingCoord = board.Height / 2;
+            SnakeBody = new List<SnakeBodyPart>() { new SnakeBodyPart(xStartingCoord, yStartingCoord) };
             SnakeHead = SnakeBody[0];
             SnakeTail = SnakeBody[SnakeBody.Count - 1];
 
@@ -52,9 +54,6 @@ namespace STUDY.Personal.SnakeGame
 
         public void UpdateSnake()
         {
-            
-            UpdateSnakeDirection();
-
             SnakeBodyPart newHead = CalculateNewHeadPosition(currentDirection);
 
             DisplayManager.RemoveTailFromScreen(SnakeTail);
@@ -70,10 +69,6 @@ namespace STUDY.Personal.SnakeGame
             {
                 Console.WriteLine("You Ded");
             }
-
-            
-
-
         }
         public void UpdateSnakeDirection()
         {
@@ -145,6 +140,14 @@ namespace STUDY.Personal.SnakeGame
         public SnakeBodyPart GetSnakeHead()
         {
             return this.SnakeHead;
+        }
+        public void AppleEaten(SnakeBodyPart newPart)
+        {
+            throw new NotImplementedException();
+        }
+        public void InsertNewHead(SnakeBodyPart newHead)
+        {
+            SnakeBody.Insert(0, newHead);
         }
     }
 }

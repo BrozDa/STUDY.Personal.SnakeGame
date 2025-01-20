@@ -9,7 +9,7 @@ namespace STUDY.Personal.SnakeGame
 {
     internal class SnakeGame
     {
-        private readonly int _timerTick = 200;
+        private readonly int _timerTick = 1000;
         private System.Timers.Timer _timer;
         private readonly char _snakeChar = '@';
         private GameBoard gameBoard { get; set; }
@@ -26,7 +26,7 @@ namespace STUDY.Personal.SnakeGame
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            gameBoard = new GameBoard(50,20,'#');
+            gameBoard = new GameBoard(10,10,'#');
 
             inputManager = new InputManager(defaultDirection);
             
@@ -73,9 +73,27 @@ namespace STUDY.Personal.SnakeGame
         {
             
             snake.UpdateSnakeDirection();
+
+            //check if apple is on next position
+            //if yes then insert new head to the start and generate new appl
+            //if not then continue
+
+            //NEW CODE
+            /*SnakeBodyPart newHead = snake.CalculateNewHeadPosition(snake.currentDirection);
+            if(CompareHeadAndApplePositions(apple, newHead))
+            {
+                snake.InsertNewHead(newHead);
+                
+            }
+            CheckForApple(apple, newHead);*/
+
+            //OLD CODE
+            SnakeBodyPart newHead = snake.CalculateNewHeadPosition(snake.currentDirection);
+            CheckForApple(apple, newHead);
+
             snake.UpdateSnake();
 
-            
+            //check if apple was eaten
             if(CompareHeadAndApplePositions(apple, snake.GetSnakeHead())){
                 apple.GenerateNewApple(gameBoard, snake);
                 DisplayManager.PrintApple(apple);
@@ -86,6 +104,13 @@ namespace STUDY.Personal.SnakeGame
         private bool CompareHeadAndApplePositions(Apple apple, SnakeBodyPart snakeHead)
         {
             return apple.xCoord == snakeHead.xCoord && apple.yCoord == snakeHead.yCoord;
+        }
+        private void CheckForApple(Apple apple, SnakeBodyPart newHead)
+        {
+            if(CompareHeadAndApplePositions(apple, newHead))
+            {
+              snake.InsertNewHead(newHead);
+            }
         }
 
 
