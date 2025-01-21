@@ -8,91 +8,94 @@ using System.Threading.Tasks;
 namespace STUDY.Personal.SnakeGame
 {
     
-    internal static class DisplayManager
+    internal class DisplayManager
     {
+        private GameBoard Board { get; init; }
+        public DisplayManager(GameBoard board)
+        {
+            this.Board = board;
+        }
 
-        
-
-        public static void PrintGameBorder(GameBoard board)
+        public void PrintGameBorder()
         {
             string pressEnterText = ">>> Press [ENTER] to start <<<";
-            int padding = (board.Width-2 - pressEnterText.Length) / 2;
+            int padding = (Board.Width-2 - pressEnterText.Length) / 2;
 
 
             StringBuilder controlsAndPauseLine = new StringBuilder();
             controlsAndPauseLine.Append(new string(' ', padding));
-            controlsAndPauseLine.Append("Controls: " + board.ArrowLeft + "   " + board.ArrowRight);
+            controlsAndPauseLine.Append("Controls: " + Board.ArrowLeft + "   " + Board.ArrowRight);
             controlsAndPauseLine.Append("  Pause: [SPACE] ");
-            controlsAndPauseLine.Append(new string(' ', board.Width - controlsAndPauseLine.Length - 2));
+            controlsAndPauseLine.Append(new string(' ', Board.Width - controlsAndPauseLine.Length - 2));
 
-            int upDownArrowPosition = controlsAndPauseLine.ToString().IndexOf(board.ArrowLeft) + 2;
+            int upDownArrowPosition = controlsAndPauseLine.ToString().IndexOf(Board.ArrowLeft) + 2;
 
 
             StringBuilder upArrow = new StringBuilder();
-            upArrow.Append(new string(' ', upDownArrowPosition) + board.ArrowUp);
-            upArrow.Append(new string(' ', board.Width - upArrow.Length - 2));
+            upArrow.Append(new string(' ', upDownArrowPosition) + Board.ArrowUp);
+            upArrow.Append(new string(' ', Board.Width - upArrow.Length - 2));
 
             
             string downArrow = upArrow.ToString();
-            downArrow = downArrow.Replace(board.ArrowUp, board.ArrowDown);
+            downArrow = downArrow.Replace(Board.ArrowUp, Board.ArrowDown);
 
-            string horizontalLineNoCorners = new string(board.HorizontalLine, board.Width - 2);
-
-
-            Console.WriteLine(HorizontalLinesBetweenCorners(board, board.TopLeftCorner, board.TopRightCorner));
+            string horizontalLineNoCorners = new string(Board.HorizontalLine, Board.Width - 2);
 
 
-            for (int i = 1; i < board.Height - 1; i++)
+            Console.WriteLine(HorizontalLinesBetweenCorners(Board.TopLeftCorner, Board.TopRightCorner));
+
+
+            for (int i = 1; i < Board.Height - 1; i++)
             {
-                PrintEmptyLineWithBorders(board);
+                PrintEmptyLineWithBorders();
             }
 
-            Console.WriteLine(HorizontalLinesBetweenCorners(board, board.VerticalLineWithRight, board.VerticalLineWithLeft));
+            Console.WriteLine(HorizontalLinesBetweenCorners(Board.VerticalLineWithRight, Board.VerticalLineWithLeft));
 
-            PrintEmptyLineWithBorders(board);
+            PrintEmptyLineWithBorders();
 
-            Console.Write(board.VerticalLine + new string(' ', padding));
+            Console.Write(Board.VerticalLine + new string(' ', padding));
             Console.Write(pressEnterText);
-            Console.WriteLine(new string(' ', padding)+ board.VerticalLine);
+            Console.WriteLine(new string(' ', padding)+ Board.VerticalLine);
 
-            PrintEmptyLineWithBorders(board);
+            PrintEmptyLineWithBorders();
 
-            Console.WriteLine(WrapTextToBorders(board, upArrow.ToString()));
+            Console.WriteLine(WrapTextToBorders(upArrow.ToString()));
 
-            Console.WriteLine(WrapTextToBorders(board, controlsAndPauseLine.ToString()));
+            Console.WriteLine(WrapTextToBorders(controlsAndPauseLine.ToString()));
 
-            Console.WriteLine(WrapTextToBorders(board, downArrow));
+            Console.WriteLine(WrapTextToBorders(downArrow));
 
-            PrintEmptyLineWithBorders(board);
+            PrintEmptyLineWithBorders();
 
-            Console.WriteLine(HorizontalLinesBetweenCorners(board, board.BottomLeftCorner, board.BottomCorner));
+            Console.WriteLine(HorizontalLinesBetweenCorners(Board.BottomLeftCorner, Board.BottomCorner));
 
 
         }
-        public static string WrapTextToBorders(GameBoard board, string text)
+        public string WrapTextToBorders(string text)
         {
-            return board.VerticalLine + text + board.VerticalLine;
+            return Board.VerticalLine + text + Board.VerticalLine;
         }
-        public static string HorizontalLinesBetweenCorners(GameBoard board, char leftSide, char rightSide)
+        public string HorizontalLinesBetweenCorners(char leftSide, char rightSide)
         {
-            return leftSide + new string(board.HorizontalLine, board.Width - 2) + rightSide;
+            return leftSide + new string(Board.HorizontalLine, Board.Width - 2) + rightSide;
         }
-        public static void PrintEmptyLineWithBorders(GameBoard board)
+        public void PrintEmptyLineWithBorders()
         {
-            Console.Write(board.VerticalLine);
-            Console.Write(new string(' ', board.Width - 2));
-            Console.Write(board.VerticalLine);
+            Console.Write(Board.VerticalLine);
+            Console.Write(new string(' ', Board.Width - 2));
+            Console.Write(Board.VerticalLine);
             Console.WriteLine();
         }
 
-        public static void PrintApple(Apple apple) {
+        public void PrintApple(Apple apple) {
             Console.ForegroundColor = ConsoleColor.Red; 
             Console.SetCursorPosition(apple.xCoord, apple.yCoord);
             Console.Write(apple.appleCharacter);
             Console.ResetColor();   
         }
 
-        public static void PrintSnake(Snake snake) {
+        public void PrintSnake(Snake snake) {
 
             Console.ForegroundColor = ConsoleColor.Green;
             List<SnakeBodyPart> snakeBody = snake.GetSnakeBody();
@@ -117,7 +120,7 @@ namespace STUDY.Personal.SnakeGame
             }
             Console.ResetColor();
         }
-        public static void RemoveTailFromScreen(SnakeBodyPart tail)
+        public void RemoveTailFromScreen(SnakeBodyPart tail)
         {
      
             Console.SetCursorPosition(tail.xCoord, tail.yCoord);

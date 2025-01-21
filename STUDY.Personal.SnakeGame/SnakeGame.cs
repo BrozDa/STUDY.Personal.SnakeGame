@@ -23,6 +23,7 @@ namespace STUDY.Personal.SnakeGame
         private Direction beforePause;
 
         private InputManager inputManager { get; set; }
+        private DisplayManager displayManager { get; set; }
 
         private bool snakeAlive = true;
         private bool _isPaused = false;
@@ -34,7 +35,9 @@ namespace STUDY.Personal.SnakeGame
             gameBoard = new GameBoard(50,20,'#');
 
             inputManager = new InputManager(direction);
-            
+
+            displayManager = new DisplayManager(gameBoard);
+
             snake = new Snake(gameBoard, inputManager, direction);
 
             apple = new Apple();
@@ -45,11 +48,11 @@ namespace STUDY.Personal.SnakeGame
         
         public void SetupNewGame()
         {
-            
-            DisplayManager.PrintGameBorder(gameBoard);
+
+            displayManager.PrintGameBorder();
 
             apple.GenerateNewApple(gameBoard, snake);
-            DisplayManager.PrintApple(apple);
+            displayManager.PrintApple(apple);
 
 
         }
@@ -61,7 +64,7 @@ namespace STUDY.Personal.SnakeGame
 
             }*/
             SetupTimer(_timerTick);
-            DisplayManager.PrintSnake(snake);
+            displayManager.PrintSnake(snake);
 
             while (snakeAlive)
             {
@@ -152,13 +155,13 @@ namespace STUDY.Personal.SnakeGame
                 if (appleEaten)
                 {
                     apple.GenerateNewApple(gameBoard, snake);
-                    DisplayManager.PrintApple(apple);
+                    displayManager.PrintApple(apple);
                 }
                 //update snake with position of head
                 //if apple was eaten then we do not remove tail
-                DisplayManager.RemoveTailFromScreen(snake.GetSnakeTail());
+                displayManager.RemoveTailFromScreen(snake.GetSnakeTail());
                 snake.UpdateSnake(newHead, appleEaten);
-                DisplayManager.PrintSnake(snake);
+                displayManager.PrintSnake(snake);
             }
         }
         private bool CompareHeadAndApplePositions(Apple apple, SnakeBodyPart snakeHead)
