@@ -11,17 +11,18 @@ namespace STUDY.Personal.SnakeGame
     internal class DisplayManager
     {
         private GameBoard Board { get; init; }
+
+        private readonly string pressEnterText = ">>> Press [ENTER] to start <<<";
+        private int padding;
         public DisplayManager(GameBoard board)
         {
             this.Board = board;
+            padding = (Board.Width - 2 - pressEnterText.Length) / 2;
         }
 
         public void PrintGameBorder()
         {
-            string pressEnterText = ">>> Press [ENTER] to start <<<";
-            int padding = (Board.Width-2 - pressEnterText.Length) / 2;
-
-
+            
             StringBuilder controlsAndPauseLine = new StringBuilder();
             controlsAndPauseLine.Append(new string(' ', padding));
             controlsAndPauseLine.Append("Controls: " + Board.ArrowLeft + "   " + Board.ArrowRight);
