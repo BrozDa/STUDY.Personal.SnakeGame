@@ -15,26 +15,37 @@ namespace STUDY.Personal.SnakeGame
             currentDirection = defaultDirection;
         }
 
-        public Direction ProcessUserInput() {
+        public Direction ProcessUserInput(bool isPaused) {
 
             ConsoleKey userInput = GetUserKey();
+
+            if(userInput == ConsoleKey.Spacebar)
+            {
+                return isPaused? Direction.Resume: Direction.Pause;
+            }
+
+
+            if (isPaused)
+            {
+                return Direction.Stand;
+            }
+
             currentDirection = ConvertKeyToDirection(userInput);
             return currentDirection;
+            
 
         }
 
         public ConsoleKey GetUserKey()
         {
-            ConsoleKey userInput;
-            if (Console.KeyAvailable)
+            ConsoleKey userInput = ConsoleKey.None;
+
+            //clears whole buffer and takes only last input
+            //if there is no input then returns ConsoleKey.None
+            while (Console.KeyAvailable)
             {
                 userInput = Console.ReadKey().Key;
             }
-            else
-            {
-                userInput = ConsoleKey.None;
-            }
-
             return userInput;
 
         }

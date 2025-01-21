@@ -64,7 +64,6 @@ namespace STUDY.Personal.SnakeGame
             }
             else
             {
-                DisplayManager.RemoveTailFromScreen(SnakeTail);
 
                 //if yes then we need to place new head at the start of the list
                 SnakeBody.Insert(0, newHead);
@@ -78,10 +77,10 @@ namespace STUDY.Personal.SnakeGame
             }
             
         }
-        public void UpdateSnakeDirection()
+        public void UpdateSnakeDirection(Direction newDirection)
         {
-            Direction newDirection = inputManager.ProcessUserInput();
             currentDirection = ValidateNewDirection(currentDirection, newDirection);
+            
         }
 
         //to make sure snake cant do 180
@@ -160,6 +159,10 @@ namespace STUDY.Personal.SnakeGame
         public SnakeBodyPart GetSnakeHead()
         {
             return this.SnakeHead;
+        }
+        public SnakeBodyPart GetSnakeTail()
+        {
+            return this.SnakeTail;
         }
         public void AppleEaten(SnakeBodyPart newPart)
         {
