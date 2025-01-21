@@ -13,65 +13,74 @@ namespace STUDY.Personal.SnakeGame
         private GameBoard Board { get; init; }
 
         private readonly string pressEnterText = ">>> Press [ENTER] to start <<<";
+        private readonly string Score = "Score: ";
+        private readonly int scoreRow;
+        private readonly int scoreCol;
         private int padding;
+        string controlsAndPauseLine;
+        int upDownArrowPosition;
         public DisplayManager(GameBoard board)
         {
             this.Board = board;
             padding = (Board.Width - 2 - pressEnterText.Length) / 2;
+            controlsAndPauseLine = ControlsAndPauseLine();
+            upDownArrowPosition = controlsAndPauseLine.ToString().IndexOf(Board.ArrowLeft) + 2;
+            scoreRow = board.Height + 1;
+            scoreCol = 1 + padding + 12;
         }
 
         public void PrintGameBorder()
         {
-            
+            string topBorder = HorizontalLinesBetweenCorners(Board.TopLeftCorner, Board.TopRightCorner);
+            string middleBorder = HorizontalLinesBetweenCorners(Board.VerticalLineWithRight, Board.VerticalLineWithLeft);
+            string bottomBorder = HorizontalLinesBetweenCorners(Board.BottomLeftCorner, Board.BottomCorner);
+
+            string controlsAndPauseLine = ControlsAndPauseLine();
+
+
+            Console.WriteLine(topBorder);
+            PrintEmptyLineWithBorders(Board.Height - 2);
+            Console.WriteLine(middleBorder);
+            PrintEmptyLineWithBorders(1);
+            PrintCenteredText(pressEnterText);
+            PrintEmptyLineWithBorders(1);
+            PrintArrowsAndControls();
+            PrintEmptyLineWithBorders(1);
+            Console.WriteLine(bottomBorder);
+
+        }
+
+        private void PrintArrowsAndControls()
+        {
+            StringBuilder upArrow = new StringBuilder();
+            upArrow.Append(new string(' ', upDownArrowPosition) + Board.ArrowUp);
+            upArrow.Append(new string(' ', Board.Width - upArrow.Length - 2));
+            Console.WriteLine(WrapTextToBorders(upArrow.ToString()));
+            Console.WriteLine(WrapTextToBorders(ControlsAndPauseLine()));
+
+            StringBuilder downArrow = new StringBuilder();
+            downArrow.Append(new string(' ', upDownArrowPosition) + Board.ArrowDown);
+            downArrow.Append(new string(' ', Board.Width - downArrow.Length - 2));
+
+            Console.WriteLine(WrapTextToBorders(downArrow.ToString()));
+
+
+        }
+
+        public string ControlsAndPauseLine()
+        {
             StringBuilder controlsAndPauseLine = new StringBuilder();
             controlsAndPauseLine.Append(new string(' ', padding));
             controlsAndPauseLine.Append("Controls: " + Board.ArrowLeft + "   " + Board.ArrowRight);
             controlsAndPauseLine.Append("  Pause: [SPACE] ");
             controlsAndPauseLine.Append(new string(' ', Board.Width - controlsAndPauseLine.Length - 2));
 
-            int upDownArrowPosition = controlsAndPauseLine.ToString().IndexOf(Board.ArrowLeft) + 2;
-
-
-            StringBuilder upArrow = new StringBuilder();
-            upArrow.Append(new string(' ', upDownArrowPosition) + Board.ArrowUp);
-            upArrow.Append(new string(' ', Board.Width - upArrow.Length - 2));
-
-            
-            string downArrow = upArrow.ToString();
-            downArrow = downArrow.Replace(Board.ArrowUp, Board.ArrowDown);
-
-            string horizontalLineNoCorners = new string(Board.HorizontalLine, Board.Width - 2);
-
-
-            Console.WriteLine(HorizontalLinesBetweenCorners(Board.TopLeftCorner, Board.TopRightCorner));
-
-
-            for (int i = 1; i < Board.Height - 1; i++)
-            {
-                PrintEmptyLineWithBorders();
-            }
-
-            Console.WriteLine(HorizontalLinesBetweenCorners(Board.VerticalLineWithRight, Board.VerticalLineWithLeft));
-
-            PrintEmptyLineWithBorders();
-
-            Console.Write(Board.VerticalLine + new string(' ', padding));
-            Console.Write(pressEnterText);
-            Console.WriteLine(new string(' ', padding)+ Board.VerticalLine);
-
-            PrintEmptyLineWithBorders();
-
-            Console.WriteLine(WrapTextToBorders(upArrow.ToString()));
-
-            Console.WriteLine(WrapTextToBorders(controlsAndPauseLine.ToString()));
-
-            Console.WriteLine(WrapTextToBorders(downArrow));
-
-            PrintEmptyLineWithBorders();
-
-            Console.WriteLine(HorizontalLinesBetweenCorners(Board.BottomLeftCorner, Board.BottomCorner));
-
-
+            return controlsAndPauseLine.ToString();
+        }
+        private void PrintCenteredText(string text)
+        {
+            string centeredText = new string(' ', padding) + text + new string(' ', Board.Width - 2 - padding - text.Length);
+            Console.WriteLine(WrapTextToBorders(centeredText));
         }
         public string WrapTextToBorders(string text)
         {
@@ -81,12 +90,15 @@ namespace STUDY.Personal.SnakeGame
         {
             return leftSide + new string(Board.HorizontalLine, Board.Width - 2) + rightSide;
         }
-        public void PrintEmptyLineWithBorders()
+        public void PrintEmptyLineWithBorders(int count)
         {
-            Console.Write(Board.VerticalLine);
-            Console.Write(new string(' ', Board.Width - 2));
-            Console.Write(Board.VerticalLine);
-            Console.WriteLine();
+            for (int i = 0; i < count; i++) {
+                Console.Write(Board.VerticalLine);
+                Console.Write(new string(' ', Board.Width - 2));
+                Console.Write(Board.VerticalLine);
+                Console.WriteLine();
+            }
+            
         }
 
         public void PrintApple(Apple apple) {
@@ -126,6 +138,13 @@ namespace STUDY.Personal.SnakeGame
      
             Console.SetCursorPosition(tail.xCoord, tail.yCoord);
             Console.Write(" ");
+        }
+        public void PrintScore(int score)
+        {
+            Console.SetCursorPosition(0, scoreRow);
+            PrintEmptyLineWithBorders(1);
+            Console.SetCursorPosition(scoreCol, scoreRow);
+            Console.Write("Score: " + score);
         }
     }
 }

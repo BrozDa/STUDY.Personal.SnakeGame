@@ -19,6 +19,8 @@ namespace STUDY.Personal.SnakeGame
 
         private Apple apple;
 
+        private int _score = 0;
+
         private Direction direction = Direction.Right;
         private Direction beforePause;
 
@@ -27,6 +29,7 @@ namespace STUDY.Personal.SnakeGame
 
         private bool snakeAlive = true;
         private bool _isPaused = false;
+
         public SnakeGame()
         {
             Console.CursorVisible = false;
@@ -49,20 +52,25 @@ namespace STUDY.Personal.SnakeGame
         public void SetupNewGame()
         {
 
-            displayManager.PrintGameBorder();
+            
 
-            apple.GenerateNewApple(gameBoard, snake);
-            displayManager.PrintApple(apple);
+            
 
 
         }
         public void PlayGame()
         {
-            SetupNewGame();
-            /*while(Console.ReadKey().Key != ConsoleKey.Enter)
-            {
+            displayManager.PrintGameBorder();
 
-            }*/
+            while (true)
+            {
+                if (Console.ReadKey().Key == ConsoleKey.Enter)
+                    break;
+            }
+            apple.GenerateNewApple(gameBoard, snake);
+            displayManager.PrintApple(apple);
+            displayManager.PrintScore(_score);
+
             SetupTimer(_timerTick);
             displayManager.PrintSnake(snake);
 
@@ -102,12 +110,14 @@ namespace STUDY.Personal.SnakeGame
             else if (!_isPaused && newDirection == Direction.Pause)
             {
                 PauseGame();
-
+                
             }
             // User is playing
             else
             {
                 PlayRound(newDirection);
+                Console.SetCursorPosition(0, 0);
+                
                 //direction = newDirection;
                 //ProcessSnake(newDirection);
 
@@ -156,6 +166,8 @@ namespace STUDY.Personal.SnakeGame
                 {
                     apple.GenerateNewApple(gameBoard, snake);
                     displayManager.PrintApple(apple);
+                    _score++;
+                    displayManager.PrintScore(_score);
                 }
                 //update snake with position of head
                 //if apple was eaten then we do not remove tail

@@ -25,6 +25,7 @@ namespace STUDY.Personal.SnakeGame
         public Direction currentDirection { get; set; }
 
 
+
         private int boardWidth {get; init;}
         private int boardHeight { get; init; }
         private InputManager inputManager;
