@@ -52,7 +52,7 @@ namespace STUDY.Personal.SnakeGame
         ConsoleKey key = ConsoleKey.None;
         Stack<MenuAndOption> menuQueue = new Stack<MenuAndOption>();
 
-        private (int width, int height) Size = (20,20);
+        private (int width, int height) Size = (40,20);
         private bool movingThroughWall = false;
 
         public MainMenu()
@@ -65,10 +65,10 @@ namespace STUDY.Personal.SnakeGame
         public void InitializeMenus()
         {
             menus = new List<MenuAndOption>() { 
-                new MenuAndOption(mainMenu) ,
-                new MenuAndOption(settingMenu),
-                new MenuAndOption(sizeMenu),
-                new MenuAndOption(movingThroughWallMenu),
+                new MenuAndOption(mainMenu, false) ,
+                new MenuAndOption(settingMenu, false),
+                new MenuAndOption(sizeMenu, true),
+                new MenuAndOption(movingThroughWallMenu, true),
 
             };
         }
@@ -102,6 +102,9 @@ namespace STUDY.Personal.SnakeGame
             }
 
             HighLightMenuItem(menu);
+            if (menu.isSelectionMenu) {
+                HighLightSelection(menu);
+            }
         }
         
         public void ClearPreviousMenu()
@@ -139,8 +142,10 @@ namespace STUDY.Personal.SnakeGame
             while (true) {
                 key = Console.ReadKey().Key;
                 newMenu = RotateOptions(newMenu, key);
-                if(newMenu.menu != previousMenu.menu)
-                PrintMenu(newMenu);
+                if (newMenu.menu != previousMenu.menu)
+                    PrintMenu(newMenu);
+                else if(newMenu.isSelectionMenu)
+                    HighLightSelection(newMenu);
 
                 previousMenu = newMenu;
             }
@@ -187,12 +192,6 @@ namespace STUDY.Personal.SnakeGame
         }
         private MenuAndOption ProcessCurrentMenuSelection(MenuAndOption menu)
         {
-            /*menus = new List<MenuAndOption>() { 
-            new MenuAndOption(mainMenu) ,
-                new MenuAndOption(settingMenu),
-                new MenuAndOption(sizeMenu),
-                new MenuAndOption(movingThroughWallMenu),*/
-
 
             //main menu
             if (menu.menu == menus[0].menu)
@@ -241,7 +240,7 @@ namespace STUDY.Personal.SnakeGame
                 switch (menu.option)
                 {
                     case 0:
-                        this.Size = (20, 20);
+                        this.Size = (50, 20);
                         selection = true;
                         break;
                     case 1:
@@ -286,13 +285,32 @@ namespace STUDY.Personal.SnakeGame
         }
         public void HighLightSelection(MenuAndOption menu)
         {
-            Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top + menu.option);
+            int temp= menu.option;
+            //size
+            if(menu.menu == menus[2].menu)
+            {
+                switch (Size) {
+                    case (50, 20): temp = 0; break;
+                    case (60, 20): temp = 1; break;
+                    case (100, 20): temp = 2; break;
+
+                }
+            }
+            //walls
+            if (menu.menu == menus[3].menu){
+                temp = (movingThroughWall? 1 : 0);   
+            }
+            Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top + temp);
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(menu.menu[menu.option]);
+            Console.WriteLine(menu.menu[temp]);
             Console.ResetColor();
         }
-        public void StartNewGame() { throw new NotImplementedException(); }
+        public void StartNewGame() {
+            Console.Clear();
+            SnakeGame game = new SnakeGame(Size);
+            game.PlayGame();
+        }
           
            
 
