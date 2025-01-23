@@ -106,6 +106,8 @@ namespace STUDY.Personal.SnakeGame
         public SnakeBodyPart CalculateNewHeadPosition(Direction direction)
         {
             SnakeBodyPart newHead = new SnakeBodyPart(SnakeHead.xCoord, SnakeHead.yCoord);
+
+
             switch (direction) { 
                 case Direction.Up:
                     newHead.yCoord -= 1;
@@ -126,6 +128,24 @@ namespace STUDY.Personal.SnakeGame
                 
             }
             return newHead;
+        }
+        public void TurnHead(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    headCharacter = '\u25B3';
+                    break;
+                case Direction.Down:
+                    headCharacter = '\u25BD';
+                    break;
+                case Direction.Right:
+                    headCharacter = '\u25B7';
+                    break;
+                case Direction.Left:
+                    headCharacter = '\u25C1';
+                    break;
+            }
         }
         public bool ValidateNewHeadPosition(SnakeBodyPart newHeadPosition)
         {

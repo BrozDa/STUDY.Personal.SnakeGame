@@ -69,6 +69,7 @@ namespace STUDY.Personal.SnakeGame
             {
                 
             }
+            displayManager.PrintSnake(snake);
 
             Console.SetCursorPosition(0, 0);    
             Console.WriteLine("SNAKE IS DEAD");
@@ -136,7 +137,7 @@ namespace STUDY.Personal.SnakeGame
         {
             //check user input for direction
             snake.UpdateSnakeDirection(newDirection);
-
+            snake.TurnHead(direction);
             //calculate new position for head of the snake
             SnakeBodyPart newHead = snake.CalculateNewHeadPosition(snake.currentDirection);
 
