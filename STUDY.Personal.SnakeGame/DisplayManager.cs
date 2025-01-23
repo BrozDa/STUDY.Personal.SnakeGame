@@ -13,12 +13,14 @@ namespace STUDY.Personal.SnakeGame
         private GameBoard Board { get; init; }
 
         private readonly string pressEnterText = ">>> Press [ENTER] to start <<<";
-        private readonly string Score = "Score: ";
         private readonly int scoreRow;
         private readonly int scoreCol;
         private int padding;
         string controlsAndPauseLine;
         int upDownArrowPosition;
+
+        
+
         public DisplayManager(GameBoard board)
         {
             this.Board = board;
