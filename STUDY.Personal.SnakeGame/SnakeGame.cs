@@ -30,12 +30,12 @@ namespace STUDY.Personal.SnakeGame
         private bool snakeAlive = true;
         private bool _isPaused = false;
 
-        public SnakeGame()
+        public SnakeGame((int width, int height) size)
         {
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            gameBoard = new GameBoard(50,20,'#');
+            gameBoard = new GameBoard(size.width, size.height,'#');
 
             inputManager = new InputManager(direction);
 
@@ -49,15 +49,6 @@ namespace STUDY.Personal.SnakeGame
             
         }
         
-        public void SetupNewGame()
-        {
-
-            
-
-            
-
-
-        }
         public void PlayGame()
         {
             displayManager.PrintGameBorder();
