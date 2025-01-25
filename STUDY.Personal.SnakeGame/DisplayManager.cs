@@ -155,7 +155,7 @@ namespace STUDY.Personal.SnakeGame
         }
         public void PrintPauseBanner()
         {
-            string banner = Properties.Resources.PauseGameBanner;
+            string banner = Properties.Resources.PauseBanner;
             int bannerWidth = 29;
             int bannerHeight = 6;
            
@@ -171,7 +171,7 @@ namespace STUDY.Personal.SnakeGame
         public void PrintDeadBanner(int score)
         {
 
-             string banner = Properties.Resources.Dead_Banner;
+             string banner = Properties.Resources.DeadBanner;
              int bannerWidth = 39;
              int bannerHeight = 8;
 

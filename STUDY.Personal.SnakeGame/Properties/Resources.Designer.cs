@@ -71,9 +71,9 @@ namespace STUDY.Personal.SnakeGame.Properties {
         ///╚═════════════════════════════════════╝
         ///.
         /// </summary>
-        internal static string Dead_Banner {
+        internal static string DeadBanner {
             get {
-                return ResourceManager.GetString("Dead Banner", resourceCulture);
+                return ResourceManager.GetString("DeadBanner", resourceCulture);
             }
         }
         
@@ -85,9 +85,29 @@ namespace STUDY.Personal.SnakeGame.Properties {
         ///║                           ║
         ///╚═══════════════════════════╝.
         /// </summary>
-        internal static string PauseGameBanner {
+        internal static string PauseBanner {
             get {
-                return ResourceManager.GetString("PauseGameBanner", resourceCulture);
+                return ResourceManager.GetString("PauseBanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///           _________         _________
+        ///          /         \       /         \
+        ///         /  /~~~~~\  \     /  /~~~~~\  \
+        ///         |  |     |  |     |  |     |  |
+        ///         |  |     |  |     |  |     |  |
+        ///         |  |     |  |     |  |     |  |         /
+        ///         |  |     |  |     |  |     |  |       //
+        ///        (o  o)    \  \_____/  /     \  \_____/ /
+        ///         \__/      \         /       \        /
+        ///          |         ~~~~~~~~~         ~~~~~~~~
+        ///          ^.
+        /// </summary>
+        internal static string SnakeAscii {
+            get {
+                return ResourceManager.GetString("SnakeAscii", resourceCulture);
             }
         }
     }

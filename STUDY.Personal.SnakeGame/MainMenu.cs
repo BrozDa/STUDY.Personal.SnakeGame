@@ -12,71 +12,39 @@ namespace STUDY.Personal.SnakeGame
     
     internal class MainMenu
     {
-        /*public struct MenuAndOption
-        {
-            public string[] menu;
-            public int option = 0;
+        private readonly string snakeAscii = Properties.Resources.SnakeAscii;
 
-            public MenuAndOption(string[] menu)
-            {
-                this.menu = menu;
-
-            }
-        }*/
-        private readonly string snakeAscii = @"
-           _________         _________
-          /         \       /         \
-         /  /~~~~~\  \     /  /~~~~~\  \
-         |  |     |  |     |  |     |  |
-         |  |     |  |     |  |     |  |
-         |  |     |  |     |  |     |  |         /
-         |  |     |  |     |  |     |  |       //
-        (o  o)    \  \_____/  /     \  \_____/ /
-         \__/      \         /       \        /
-          |         ~~~~~~~~~         ~~~~~~~~
-          ^";
-        MenuInputManager menuInputManager;
-        private (int left, int top) mainMenuOptionLocation = (0,0);
-        private readonly string[] mainMenu = new string[] {"  << Start a new game >>", "  << Settings >>", "  << Exit >>" };
-        private readonly string[] settingMenu = new string[] { "  << Size >>", "  << Moving Through Walls >>  ", "  << Exit to main menu >>  " };
-        private readonly string[] sizeMenu = { "  << Small >>", "  << Medium >>  ", "  << Large >>  ", "  << Exit >>  " };
-        private readonly string[] movingThroughWallMenu = { "  << Enabled >>", "  << Disabled >>  ", "  << Exit >>  " };
-        private int mainMenuOption = 0;
-
-        public List<MenuAndOption> menus;
-        private int currentMenu = 0;
+        //non backed
+        private readonly string[] _mainMenu = new string[] {"  << Start a new game >>", "  << Settings >>", "  << Exit >>" };
+        private readonly string[] _settingMenu = new string[] { "  << Size >>", "  << Moving Through Walls >>  ", "  << Exit to main menu >>  " };
+        private readonly string[] _sizeMenu = { "  << Small >>", "  << Medium >>  ", "  << Large >>  ", "  << Exit >>  " };
+        private readonly string[] _movingThroughWallsMenu = { "  << Enabled >>", "  << Disabled >>  ", "  << Exit >>  " };
+        private (int left, int top) _mainMenuOptionLocation = (0, 0);
+        private List<MenuAndOption> _menuList;
+        private int _currentMenu = 0;
+        private Stack<MenuAndOption> _menuQueue = new Stack<MenuAndOption>();
+        
+        private bool _canMoveThroughWalls = false;
         bool selection = false;
-       
 
-        private int currentOption = 0;
-        ConsoleKey key = ConsoleKey.None;
-        Stack<MenuAndOption> menuQueue = new Stack<MenuAndOption>();
-
-        private (int width, int height) Size = (42,20);
-        private bool canMoveThroughWalls = false;
+        private (int width, int height) Size = (42, 20);
 
         public MainMenu()
         {
-            InitializeMenus();
-            //menuInputManager = new MenuInputManager();
+            _menuList = new List<MenuAndOption>() {
+                new MenuAndOption(_mainMenu, false) ,
+                new MenuAndOption(_settingMenu, false),
+                new MenuAndOption(_sizeMenu, true),
+                new MenuAndOption(_movingThroughWallsMenu, true)};
+            Size = (42, 20);
             Console.CursorVisible = false;
             StartMenu();
-        }
-        public void InitializeMenus()
-        {
-            menus = new List<MenuAndOption>() { 
-                new MenuAndOption(mainMenu, false) ,
-                new MenuAndOption(settingMenu, false),
-                new MenuAndOption(sizeMenu, true),
-                new MenuAndOption(movingThroughWallMenu, true),
-
-            };
         }
         public void StartMenu()
         {
             PrintLogo();
-            PrintMenu(menus[0]);
-            ProcessMenu(menus);
+            PrintMenu(_menuList[0]);
+            ProcessMenu(_menuList);
 
             //ProcessMenu(mainMenu, mainMenuOption);
         }
@@ -88,14 +56,14 @@ namespace STUDY.Personal.SnakeGame
             Console.WriteLine("Welcome to Snake Game");
             Console.WriteLine("Use Up and Down arrow keys to shift through the menu and then press Enter to select one");
             Console.WriteLine();
-            mainMenuOptionLocation = Console.GetCursorPosition();
+            _mainMenuOptionLocation = Console.GetCursorPosition();
         }
         public void PrintMenu(MenuAndOption menu)
         {
             int currentMenuOption = menu.option;
-            Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top);
+            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top);
             ClearPreviousMenu();
-            Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top);
+            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top);
 
             for (int i = 0; i < menu.menu.Count(); i++) {
                 Console.WriteLine(menu.menu[i]);
@@ -109,7 +77,7 @@ namespace STUDY.Personal.SnakeGame
         
         public void ClearPreviousMenu()
         {
-            Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top);
+            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top);
             Console.WriteLine(new string(' ', 30));
             Console.WriteLine(new string(' ', 30));
             Console.WriteLine(new string(' ', 30));
@@ -117,7 +85,7 @@ namespace STUDY.Personal.SnakeGame
         }
         private void HighLightMenuItem(MenuAndOption menu)
         {
-            Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top+ menu.option);
+            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top+ menu.option);
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine(menu.menu[menu.option]);
@@ -127,7 +95,7 @@ namespace STUDY.Personal.SnakeGame
         {
             if(seletion) {return; }
 
-            Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top+ menu.option);
+            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top+ menu.option);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(menu.menu[menu.option]);
@@ -136,8 +104,8 @@ namespace STUDY.Personal.SnakeGame
         public void ProcessMenu(List<MenuAndOption> menus)
         {
             ConsoleKey key;
-            MenuAndOption previousMenu = menus[currentMenu];
-            MenuAndOption newMenu = menus[currentMenu];
+            MenuAndOption previousMenu = menus[_currentMenu];
+            MenuAndOption newMenu = menus[_currentMenu];
 
             while (true) {
                 key = Console.ReadKey().Key;
@@ -194,7 +162,7 @@ namespace STUDY.Personal.SnakeGame
         {
 
             //main menu
-            if (menu.menu == menus[0].menu)
+            if (menu.menu == _menuList[0].menu)
             {
                 switch (menu.option) { 
                     case 0:
@@ -203,8 +171,8 @@ namespace STUDY.Personal.SnakeGame
                         //might need to clear resources
                         break;
                     case 1:
-                        menuQueue.Push(menu);
-                        menu = menus[1];
+                        _menuQueue.Push(menu);
+                        menu = _menuList[1];
                         selection = false;
                         break;
                     case 2:
@@ -214,29 +182,29 @@ namespace STUDY.Personal.SnakeGame
                 }
             }
             //settings menu
-           else if (menu == menus[1])
+           else if (menu == _menuList[1])
             {
                 switch (menu.option)
                 {
                     case 0:
-                        menuQueue.Push(menu);
-                        menu = menus[2];
+                        _menuQueue.Push(menu);
+                        menu = _menuList[2];
                         selection = false;
                         break;
                     case 1:
-                        menuQueue.Push(menu);
-                        menu = menus[3];
+                        _menuQueue.Push(menu);
+                        menu = _menuList[3];
                         selection = false;
                         break;
                     case 2:
-                        menu = menuQueue.Pop();
+                        menu = _menuQueue.Pop();
                         selection = false;
                         break;
 
                 }
             }
             //size
-            else if(menu == menus[2]) {
+            else if(menu == _menuList[2]) {
                 switch (menu.option)
                 {
                     case 0:
@@ -252,7 +220,7 @@ namespace STUDY.Personal.SnakeGame
                         selection = true;
                         break;
                     case 3:
-                        menu = menuQueue.Pop();
+                        menu = _menuQueue.Pop();
                         selection = false;
 
                         break;
@@ -260,21 +228,21 @@ namespace STUDY.Personal.SnakeGame
 
             }
             //walkable walls
-            else if(menu == menus[3])
+            else if(menu == _menuList[3])
             {
                 switch (menu.option)
                 {
                     case 0:
-                        canMoveThroughWalls = false;
+                        _canMoveThroughWalls = false;
                         selection = true;
                         break;
                     case 1:
-                        canMoveThroughWalls = true;
+                        _canMoveThroughWalls = true;
                         selection = true;
 
                         break;
                     case 2:
-                        menu = menuQueue.Pop();
+                        menu = _menuQueue.Pop();
                         selection = false;
                         break;
                 }
@@ -287,7 +255,7 @@ namespace STUDY.Personal.SnakeGame
         {
             int temp= menu.option;
             //size
-            if(menu.menu == menus[2].menu)
+            if(menu.menu == _menuList[2].menu)
             {
                 switch (Size) {
                     case (50, 20): temp = 0; break;
@@ -297,10 +265,10 @@ namespace STUDY.Personal.SnakeGame
                 }
             }
             //walls
-            if (menu.menu == menus[3].menu){
-                temp = (canMoveThroughWalls ? 1 : 0);   
+            if (menu.menu == _menuList[3].menu){
+                temp = (_canMoveThroughWalls ? 1 : 0);   
             }
-            Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top + temp);
+            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top + temp);
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine(menu.menu[temp]);
@@ -310,13 +278,13 @@ namespace STUDY.Personal.SnakeGame
             Console.Clear();
 
             SnakeGame game;
-                game = new SnakeGame(Size, canMoveThroughWalls);
+                game = new SnakeGame(Size, _canMoveThroughWalls);
                 game.PlayGame();
             if (Console.ReadKey(true).Key == ConsoleKey.Enter) {
                 Console.Clear();
                 PrintLogo();
-                PrintMenu(menus[0]);
-                ProcessMenu(menus);
+                PrintMenu(_menuList[0]);
+                ProcessMenu(_menuList);
             }
             else
             {
