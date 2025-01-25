@@ -63,6 +63,20 @@ namespace STUDY.Personal.SnakeGame.Properties {
         /// <summary>
         ///   Looks up a localized string similar to ╔═══════════════════════════╗
         ///║                           ║
+        ///║       You are dead!       ║
+        ///║       Score:              ║
+        ///║                           ║
+        ///╚═══════════════════════════╝.
+        /// </summary>
+        internal static string Dead_Banner {
+            get {
+                return ResourceManager.GetString("Dead Banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ╔═══════════════════════════╗
+        ///║                           ║
         ///║        GAME PAUSED        ║
         ///║  press [SPACE] to resume  ║
         ///║                           ║

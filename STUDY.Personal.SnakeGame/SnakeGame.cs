@@ -71,8 +71,9 @@ namespace STUDY.Personal.SnakeGame
             }
             displayManager.PrintSnake(snake);
 
-            Console.SetCursorPosition(0, 0);    
-            Console.WriteLine("SNAKE IS DEAD");
+            
+            displayManager.PrintDeadBanner(_score);
+            
 
         }
         public void SetupTimer(int timerTick)
@@ -127,7 +128,7 @@ namespace STUDY.Personal.SnakeGame
         private void ResumeGame() {
             _isPaused = false;
             direction = beforePause;
-            displayManager.ClearPauseBanner();
+            displayManager.ClearBanner();
             displayManager.PrintApple(apple);
             ProcessSnake(direction);
         }
