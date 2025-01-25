@@ -13,3 +13,5 @@ E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\
 E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.pdb
 E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.genruntimeconfig.cache
 E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\ref\STUDY.Personal.SnakeGame.dll
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.Properties.Resources.resources
+E:\Git Repos\STUDY.Personal.SnakeGame\STUDY.Personal.SnakeGame\obj\Debug\net8.0\STUDY.Personal.SnakeGame.csproj.GenerateResource.cache

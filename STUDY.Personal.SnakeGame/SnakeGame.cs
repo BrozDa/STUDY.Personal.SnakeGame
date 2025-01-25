@@ -55,7 +55,7 @@ namespace STUDY.Personal.SnakeGame
 
             while (true)
             {
-                if (Console.ReadKey().Key == ConsoleKey.Enter)
+                if (Console.ReadKey(false).Key == ConsoleKey.Enter)
                     break;
             }
             apple.GenerateNewApple(gameBoard, snake);
@@ -122,10 +122,13 @@ namespace STUDY.Personal.SnakeGame
         private void PauseGame(){
             _isPaused = true;
             beforePause = direction;
+            displayManager.PrintPauseBanner();
         }
         private void ResumeGame() {
             _isPaused = false;
             direction = beforePause;
+            displayManager.ClearPauseBanner();
+            displayManager.PrintApple(apple);
             ProcessSnake(direction);
         }
         private void PlayRound(Direction newDirection) {

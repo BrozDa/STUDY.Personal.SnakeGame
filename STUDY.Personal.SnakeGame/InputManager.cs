@@ -44,7 +44,7 @@ namespace STUDY.Personal.SnakeGame
             //if there is no input then returns ConsoleKey.None
             while (Console.KeyAvailable)
             {
-                userInput = Console.ReadKey().Key;
+                userInput = Console.ReadKey(true).Key;
             }
             return userInput;
 

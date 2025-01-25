@@ -31,18 +31,23 @@ namespace STUDY.Personal.SnakeGame
             scoreCol = 1 + padding + 12;
         }
 
-        public void PrintGameBorder()
+        public void PrintGameField()
         {
             string topBorder = HorizontalLinesBetweenCorners(Board.TopLeftCorner, Board.TopRightCorner);
             string middleBorder = HorizontalLinesBetweenCorners(Board.VerticalLineWithRight, Board.VerticalLineWithLeft);
+            Console.WriteLine(topBorder);
+            PrintEmptyLineWithBorders(Board.Height - 2);
+            Console.WriteLine(middleBorder);
+        }
+        public void PrintGameBorder()
+        {
+            
             string bottomBorder = HorizontalLinesBetweenCorners(Board.BottomLeftCorner, Board.BottomCorner);
 
             string controlsAndPauseLine = ControlsAndPauseLine();
 
-
-            Console.WriteLine(topBorder);
-            PrintEmptyLineWithBorders(Board.Height - 2);
-            Console.WriteLine(middleBorder);
+            PrintGameField();
+            
             PrintEmptyLineWithBorders(1);
             PrintCenteredText(pressEnterText);
             PrintEmptyLineWithBorders(1);
@@ -147,6 +152,26 @@ namespace STUDY.Personal.SnakeGame
             PrintEmptyLineWithBorders(1);
             Console.SetCursorPosition(scoreCol, scoreRow);
             Console.Write("Score: " + score);
+        }
+        public void PrintPauseBanner()
+        {
+            string banner = Properties.Resources.PauseGameBanner;
+            int bannerWidth = 29;
+            int bannerHeight = 6;
+           
+            int left = (Board.Width - bannerWidth)/2;
+            int top = (Board.Height - bannerHeight)/2;
+
+                                                        // +2 for /r/n characters
+            for (int i = 0; i < banner.Length; i += bannerWidth+2) {
+                Console.SetCursorPosition(left, top++);
+                Console.WriteLine(banner.Substring(i,bannerWidth));
+            }
+        }
+        public void ClearPauseBanner()
+        {
+            Console.SetCursorPosition(0, 0);
+            PrintGameField();
         }
     }
 }

@@ -6,7 +6,10 @@
         {
             SnakeGame game = new SnakeGame((50,20));
             game.PlayGame();
-            Console.ReadLine(); 
+
+            /*DisplayManager manageris = new DisplayManager(new GameBoard(50, 20, ' '));
+            manageris.PrintPauseBanner();
+            Console.ReadLine(); */
             /*MainMenu menu = new MainMenu();
             Console.ReadLine(); */
         }
