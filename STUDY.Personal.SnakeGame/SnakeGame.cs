@@ -73,7 +73,7 @@ namespace STUDY.Personal.SnakeGame
 
             
             displayManager.PrintDeadBanner(_score);
-            
+            _timer.Stop();  
 
         }
         public void SetupTimer(int timerTick)

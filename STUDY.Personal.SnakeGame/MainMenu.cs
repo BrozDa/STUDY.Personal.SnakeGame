@@ -52,7 +52,7 @@ namespace STUDY.Personal.SnakeGame
         ConsoleKey key = ConsoleKey.None;
         Stack<MenuAndOption> menuQueue = new Stack<MenuAndOption>();
 
-        private (int width, int height) Size = (40,20);
+        private (int width, int height) Size = (42,20);
         private bool movingThroughWall = false;
 
         public MainMenu()
@@ -308,8 +308,23 @@ namespace STUDY.Personal.SnakeGame
         }
         public void StartNewGame() {
             Console.Clear();
-            SnakeGame game = new SnakeGame(Size);
-            game.PlayGame();
+
+            SnakeGame game;
+                game = new SnakeGame(Size);
+                game.PlayGame();
+            if (Console.ReadKey(true).Key == ConsoleKey.Enter) {
+                Console.Clear();
+                PrintLogo();
+                PrintMenu(menus[0]);
+                ProcessMenu(menus);
+            }
+            else
+            {
+                Environment.Exit(0);
+            }
+
+            
+
         }
           
            

@@ -24,8 +24,6 @@ namespace STUDY.Personal.SnakeGame
         
         public Direction currentDirection { get; set; }
 
-
-
         private int boardWidth {get; init;}
         private int boardHeight { get; init; }
         private InputManager inputManager;
@@ -37,10 +35,9 @@ namespace STUDY.Personal.SnakeGame
             xStartingCoord = board.Width / 2;
             yStartingCoord = board.Height / 2;
             SnakeBody = new List<SnakeBodyPart>() { new SnakeBodyPart(xStartingCoord, yStartingCoord) };
+
             SnakeHead = SnakeBody[0];
             SnakeTail = SnakeBody[SnakeBody.Count - 1];
-
-
             boardWidth = board.Width;
             boardHeight = board.Height;
 

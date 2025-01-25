@@ -170,24 +170,25 @@ namespace STUDY.Personal.SnakeGame
         }
         public void PrintDeadBanner(int score)
         {
-            string banner = Properties.Resources.Dead_Banner;
-            int bannerWidth = 29;
-            int bannerHeight = 6;
 
-            (int left, int top) bannerPosition;
-            bannerPosition.left = (Board.Width - bannerWidth) / 2;
-            bannerPosition.top = (Board.Height - bannerHeight) / 2;
+             string banner = Properties.Resources.Dead_Banner;
+             int bannerWidth = 39;
+             int bannerHeight = 8;
+
+             (int left, int top) bannerPosition;
+             bannerPosition.left = (Board.Width - bannerWidth) / 2;
+             bannerPosition.top = (Board.Height - bannerHeight) / 2;
 
             for (int i = 0; i < banner.Length; i += bannerWidth + 2)
             {
                 Console.SetCursorPosition(bannerPosition.left, bannerPosition.top++);
                 Console.WriteLine(banner.Substring(i, bannerWidth));
             }
-            (int left, int top) scorePosition = (15,3);
+            (int left, int top) scorePosition = (22,5);
 
-            Console.SetCursorPosition(bannerPosition.left + scorePosition.left, bannerPosition.top-6+scorePosition.top);
-            Console.Write(score);
-            Console.SetCursorPosition(0, 0);
+             Console.SetCursorPosition(bannerPosition.left + scorePosition.left, bannerPosition.top-bannerHeight+scorePosition.top-2);
+             Console.Write(score);
+             Console.SetCursorPosition(0, 0);
         }
         public void ClearBanner()
         {
