@@ -53,7 +53,7 @@ namespace STUDY.Personal.SnakeGame
         Stack<MenuAndOption> menuQueue = new Stack<MenuAndOption>();
 
         private (int width, int height) Size = (42,20);
-        private bool movingThroughWall = false;
+        private bool canMoveThroughWalls = false;
 
         public MainMenu()
         {
@@ -265,11 +265,11 @@ namespace STUDY.Personal.SnakeGame
                 switch (menu.option)
                 {
                     case 0:
-                        movingThroughWall = false;
+                        canMoveThroughWalls = false;
                         selection = true;
                         break;
                     case 1:
-                        movingThroughWall = true;
+                        canMoveThroughWalls = true;
                         selection = true;
 
                         break;
@@ -298,7 +298,7 @@ namespace STUDY.Personal.SnakeGame
             }
             //walls
             if (menu.menu == menus[3].menu){
-                temp = (movingThroughWall? 1 : 0);   
+                temp = (canMoveThroughWalls ? 1 : 0);   
             }
             Console.SetCursorPosition(mainMenuOptionLocation.left, mainMenuOptionLocation.top + temp);
             Console.BackgroundColor = ConsoleColor.Blue;
@@ -310,7 +310,7 @@ namespace STUDY.Personal.SnakeGame
             Console.Clear();
 
             SnakeGame game;
-                game = new SnakeGame(Size);
+                game = new SnakeGame(Size, canMoveThroughWalls);
                 game.PlayGame();
             if (Console.ReadKey(true).Key == ConsoleKey.Enter) {
                 Console.Clear();

@@ -29,8 +29,9 @@ namespace STUDY.Personal.SnakeGame
 
         private bool snakeAlive = true;
         private bool _isPaused = false;
+        private bool canMoveThroughWalls;
 
-        public SnakeGame((int width, int height) size)
+        public SnakeGame((int width, int height) size, bool canMoveThroughWalls)
         {
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -41,12 +42,14 @@ namespace STUDY.Personal.SnakeGame
 
             displayManager = new DisplayManager(gameBoard);
 
-            snake = new Snake(gameBoard, inputManager, direction);
+            snake = new Snake(gameBoard, inputManager, direction, canMoveThroughWalls);
 
             apple = new Apple();
             
             _timer = new System.Timers.Timer();
-            
+            this.canMoveThroughWalls = canMoveThroughWalls;
+
+
         }
         
         public void PlayGame()

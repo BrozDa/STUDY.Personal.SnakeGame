@@ -27,10 +27,11 @@ namespace STUDY.Personal.SnakeGame
         private int boardWidth {get; init;}
         private int boardHeight { get; init; }
         private InputManager inputManager;
+        bool canMoveThroughWalls;
 
 
 
-        public Snake(GameBoard board, InputManager inputManager, Direction direction)
+        public Snake(GameBoard board, InputManager inputManager, Direction direction, bool canMoveThroughWalls)
         {
             xStartingCoord = board.Width / 2;
             yStartingCoord = board.Height / 2;
@@ -44,6 +45,7 @@ namespace STUDY.Personal.SnakeGame
             currentDirection = direction;   
 
             this.inputManager = inputManager;
+            this.canMoveThroughWalls = canMoveThroughWalls;
 
 
 
@@ -150,8 +152,36 @@ namespace STUDY.Personal.SnakeGame
         }
         private bool NotInWall(SnakeBodyPart newHeadPosition)
         {
+            if (canMoveThroughWalls)
+            {
+                TeleportToOtherSide(newHeadPosition);
+                return true;
+            }
+            
             return ((newHeadPosition.xCoord > 0 && newHeadPosition.xCoord < boardWidth - 1)
                 && (newHeadPosition.yCoord > 0 && newHeadPosition.yCoord < boardHeight - 1));
+        }
+        private void TeleportToOtherSide(SnakeBodyPart newHeadPosition)
+        {
+            if(newHeadPosition.xCoord == 0)
+            {
+                newHeadPosition.xCoord = boardWidth - 2;
+            }
+            else if (newHeadPosition.yCoord == 0)
+            {
+                newHeadPosition.yCoord = boardHeight - 2;
+            }
+
+
+            else if (newHeadPosition.xCoord == boardWidth - 1)
+            {
+                newHeadPosition.xCoord = 1;
+            }
+            else if (newHeadPosition.yCoord == boardHeight - 1)
+            {
+                newHeadPosition.yCoord = 1;
+            }
+
         }
         private bool NotEatenHimself(SnakeBodyPart newHeadPosition)
         {
