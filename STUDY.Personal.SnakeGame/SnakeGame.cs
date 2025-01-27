@@ -42,7 +42,7 @@ namespace STUDY.Personal.SnakeGame
 
             displayManager = new DisplayManager(gameBoard);
 
-            snake = new Snake(gameBoard, inputManager, direction, canMoveThroughWalls);
+            snake = new Snake(gameBoard, direction, canMoveThroughWalls);
 
             apple = new Apple(gameBoard, snake);
             
@@ -145,9 +145,9 @@ namespace STUDY.Personal.SnakeGame
         {
             //check user input for direction
             snake.UpdateSnakeDirection(newDirection);
-            snake.TurnHead(direction);
+            snake.UpdateSnakeHeadCharacter(direction);
             //calculate new position for head of the snake
-            SnakeBodyPart newHead = snake.CalculateNewHeadPosition(snake.currentDirection);
+            SnakeBodyPart newHead = snake.GetNewHeadObject(snake.CurrentDirection);
 
             //check if snake didnt crash to wall or ate himself
             bool validPositionForNewHead = snake.ValidateNewHeadPosition(newHead);
@@ -171,7 +171,7 @@ namespace STUDY.Personal.SnakeGame
                 }
                 //update snake with position of head
                 //if apple was eaten then we do not remove tail
-                displayManager.RemoveTailFromScreen(snake.GetSnakeTail());
+                displayManager.RemoveTailFromScreen(snake.SnakeTail);
                 snake.UpdateSnake(newHead, appleEaten);
                 displayManager.PrintSnake(snake);
             }

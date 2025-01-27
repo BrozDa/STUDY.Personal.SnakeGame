@@ -43,7 +43,7 @@
         /// </summary>
         /// <returns>true if snakebody and apple do not overlap</returns>
         private bool CheckIfValidPositionForApple() {
-            List<SnakeBodyPart> snakeBody = _snake.GetSnakeBody();
+            List<SnakeBodyPart> snakeBody = _snake.SnakeBody;
 
             foreach (SnakeBodyPart sbpPart in snakeBody)
             {

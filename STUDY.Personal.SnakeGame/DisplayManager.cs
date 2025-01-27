@@ -163,20 +163,18 @@ namespace STUDY.Personal.SnakeGame
         /// <param name="snake">Snake which should be printed</param>
         public void PrintSnake(Snake snake) 
         {
-            List<SnakeBodyPart> snakeBody = snake.GetSnakeBody();
-            char headCharacter = snake.GetSnakeHeadCharacter();
-            char bodyCharacter = snake.GetSnakeBodyCharacter();
+            List<SnakeBodyPart> snakeBody = snake.SnakeBody;
 
             //snake head
             Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(snakeBody[0].xCoord, snakeBody[0].yCoord);
-            Console.Write(headCharacter);
+            Console.Write(snake.HeadCharacter);
 
             //rest of the body
             for (int i = 1; i < snakeBody.Count; i++)
             {
                 Console.SetCursorPosition(snakeBody[i].xCoord, snakeBody[i].yCoord);
-                Console.Write(bodyCharacter);
+                Console.Write(snake.BodyCharacter);
             }
             Console.ResetColor();
         }
