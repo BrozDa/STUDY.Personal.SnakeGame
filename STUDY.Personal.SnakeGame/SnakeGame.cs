@@ -36,7 +36,7 @@ namespace STUDY.Personal.SnakeGame
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            gameBoard = new GameBoard(size.width, size.height,'#');
+            gameBoard = new GameBoard(size.width, size.height);
 
             inputManager = new InputManager(direction);
 
