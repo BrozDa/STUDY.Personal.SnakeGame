@@ -1,44 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-
-namespace STUDY.Personal.SnakeGame
+﻿namespace STUDY.Personal.SnakeGame
 {
+    /// <summary>
+    /// Represent object managing all input for the snake game
+    /// </summary>
     internal class InputManager
     {
-        Direction currentDirection { get; set; }
+        private Direction _direction;
+        /// <summary>
+        /// Initializes new object of Input Manager class
+        /// </summary>
+        /// <param name="defaultDirection"></param>
         public InputManager(Direction defaultDirection)
         {
-            currentDirection = defaultDirection;
+            _direction = defaultDirection;
         }
-
-        public Direction ProcessUserInput(bool isPaused) {
-
+        /// <summary>
+        /// Process user input and return <see cref="Direction"/> enumeration value
+        /// </summary>
+        /// <param name="isPaused">Bolean value representing game status - true if pause, false otherwise</param>
+        /// <returns><see cref="Direction"/> enumaration value representing direction of the snake based on user input</returns>
+        public Direction ProcessUserInput(bool isPaused) 
+        {
             ConsoleKey userInput = GetUserKey();
 
             if(userInput == ConsoleKey.Spacebar)
             {
                 return isPaused? Direction.Resume: Direction.Pause;
             }
-
-
-            if (isPaused)
+            else if (isPaused)
             {
                 return Direction.Stand;
             }
-
-            currentDirection = ConvertKeyToDirection(userInput);
-            return currentDirection;
-            
-
+            else
+            {
+                _direction = ConvertKeyToDirection(userInput);
+                return _direction;
+            }
         }
-
-        public ConsoleKey GetUserKey()
+        /// <summary>
+        /// Checks user input and returns respective <see cref="ConsoleKey"/> value
+        /// </summary>
+        /// <returns><see cref="ConsoleKey"/> value representing user input</returns>
+        private ConsoleKey GetUserKey()
         {
-            ConsoleKey userInput = ConsoleKey.None;
+            ConsoleKey? userInput = null;
 
             //clears whole buffer and takes only last input
             //if there is no input then returns ConsoleKey.None
@@ -46,21 +51,22 @@ namespace STUDY.Personal.SnakeGame
             {
                 userInput = Console.ReadKey(true).Key;
             }
-            return userInput;
 
-        }
-        public Direction ConvertKeyToDirection(ConsoleKey key) {
-
-
+            return userInput ?? ConsoleKey.None;
+        }/// <summary>
+         /// Takes user input in form of <see cref="ConsoleKey"/> and return appropriate <see cref="Direction"/> value
+         /// </summary>
+         /// <param name="key"><see cref="ConsoleKey"/> character representing user input</param>
+         /// <returns>Returs appropriate <see cref="Direction"/> value,<see cref="Direction"/>will not be changed in case of invalid input </returns>
+        public Direction ConvertKeyToDirection(ConsoleKey key) 
+        {
             return key switch
             {
                 ConsoleKey.UpArrow => Direction.Up,
                 ConsoleKey.DownArrow => Direction.Down,
                 ConsoleKey.LeftArrow => Direction.Left,
                 ConsoleKey.RightArrow => Direction.Right,
-                ConsoleKey.None => currentDirection,
-                _ => throw new NotImplementedException("Invalid ConsoleKey passed to ConvertKeyToDirection() method")
-
+                _ => _direction,
             };
         }
     }

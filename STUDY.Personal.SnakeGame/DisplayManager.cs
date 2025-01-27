@@ -2,7 +2,9 @@
 
 namespace STUDY.Personal.SnakeGame
 {
-    
+    /// <summary>
+    /// Represent object managing all output to the screen
+    /// </summary>
     internal class DisplayManager
     {
         private readonly string _pressEnterText = ">>> Press [ENTER] to start <<<";
@@ -13,7 +15,7 @@ namespace STUDY.Personal.SnakeGame
         private string _controlsAndPauseLine;
         private int _upDownArrowPositionFromLeft;
         /// <summary>
-        /// Manages all output to the screen
+        /// Initializes new instance of DisplayManager class
         /// </summary>
         /// <param name="board">GameBoard used for the game</param>
         public DisplayManager(GameBoard board)
@@ -152,7 +154,7 @@ namespace STUDY.Personal.SnakeGame
         {
             Console.ForegroundColor = ConsoleColor.Red; 
             Console.SetCursorPosition(apple.XCoord, apple.YCoord);
-            Console.Write(apple.appleCharacter);
+            Console.Write(apple.AppleCharacter);
             Console.ResetColor();   
         }
         /// <summary>

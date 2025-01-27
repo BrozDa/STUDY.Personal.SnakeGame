@@ -13,10 +13,10 @@
         public int XCoord { get { return _xCoord; } }
         public int YCoord { get { return _yCoord; } }
 
-        public readonly char appleCharacter = '\u00F3'; //ó
+        public char AppleCharacter { get { return '\u00F3'; } } //ó
 
         /// <summary>
-        /// Represent an Apple in the Snake Game
+        /// Initializes new object of Apple class
         /// </summary>
         /// <param name="board">GameBoard used for the game</param>
         /// <param name="snake">Snake object used for the game</param>
