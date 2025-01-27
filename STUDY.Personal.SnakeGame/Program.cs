@@ -11,6 +11,7 @@
             manageris.PrintDeadBanner(0);
             Console.ReadLine(); */
             MainMenu menu = new MainMenu();
+            menu.NewGame();
             Console.ReadLine(); 
         }
     }

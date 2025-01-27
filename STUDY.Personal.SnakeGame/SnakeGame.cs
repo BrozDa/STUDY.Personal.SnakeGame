@@ -76,6 +76,7 @@ namespace STUDY.Personal.SnakeGame
 
             
             displayManager.PrintDeadBanner(_score);
+            Console.ReadKey(true);
             _timer.Stop();  
 
         }

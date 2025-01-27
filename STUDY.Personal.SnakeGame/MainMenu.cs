@@ -1,54 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace STUDY.Personal.SnakeGame
+﻿namespace STUDY.Personal.SnakeGame
 {
-    
+    /// <summary>
+    /// Represents Main Menu and settings for the Snake Game
+    /// </summary>
     internal class MainMenu
     {
+        
         private readonly string snakeAscii = Properties.Resources.SnakeAscii;
 
-        //non backed
-        private readonly string[] _mainMenu = new string[] {"  << Start a new game >>", "  << Settings >>", "  << Exit >>" };
-        private readonly string[] _settingMenu = new string[] { "  << Size >>", "  << Moving Through Walls >>  ", "  << Exit to main menu >>  " };
+        private readonly string[] _mainMenu = {"  << Start a new game >>", "  << Settings >>", "  << Exit >>" };
+        private readonly string[] _settingMenu = { "  << Size >>", "  << Moving Through Walls >>  ", "  << Exit to main menu >>  " };
         private readonly string[] _sizeMenu = { "  << Small >>", "  << Medium >>  ", "  << Large >>  ", "  << Exit >>  " };
         private readonly string[] _movingThroughWallsMenu = { "  << Enabled >>", "  << Disabled >>  ", "  << Exit >>  " };
-        private (int left, int top) _mainMenuOptionLocation = (0, 0);
-        private List<MenuAndOption> _menuList;
-        private int _currentMenu = 0;
         private Stack<MenuAndOption> _menuQueue = new Stack<MenuAndOption>();
-        
+        private List<MenuAndOption> _menuList = new List<MenuAndOption>();
+        private Dictionary<int, (int left, int top)> _sizeList = new Dictionary<int, (int left, int top)>();
+        private int _currentMenu = 0;
+        private (int left, int top) _mainMenuOptionLocation = (0, 0); //position where menu should be printed, properly initialized in PrintLogo method
+        private (int width, int height) _size = (50, 20);
         private bool _canMoveThroughWalls = false;
-        bool selection = false;
 
-        private (int width, int height) Size = (42, 20);
-
+        /// <summary>
+        /// Initializes a new instance of the Main Menu class
+        /// </summary>
         public MainMenu()
         {
-            _menuList = new List<MenuAndOption>() {
-                new MenuAndOption(_mainMenu, false) ,
-                new MenuAndOption(_settingMenu, false),
-                new MenuAndOption(_sizeMenu, true),
-                new MenuAndOption(_movingThroughWallsMenu, true)};
-            Size = (42, 20);
+            InitializeMenuList();
+            InitializeSizeList();
             Console.CursorVisible = false;
-            StartMenu();
         }
+        /// <summary>
+        /// Initializes MenuList with all of its current options
+        /// </summary>
+        private void InitializeMenuList()
+        {
+            _menuList.Add(new MenuAndOption(_mainMenu, false));
+            _menuList.Add(new MenuAndOption(_settingMenu, false));
+            _menuList.Add(new MenuAndOption(_sizeMenu, true));
+            _menuList.Add(new MenuAndOption(_movingThroughWallsMenu, true));
+        }
+        /// <summary>
+        /// Initializes SizeList with all of its current options
+        /// </summary>
+        private void InitializeSizeList()
+        {
+            _sizeList.Add(0, (42, 20));
+            _sizeList.Add(1, (60, 20));
+            _sizeList.Add(2, (100, 20));
+        }
+        /// <summary>
+        /// Prints the Main menu and starts awaiting input from the user
+        /// </summary>
         public void StartMenu()
         {
             PrintLogo();
             PrintMenu(_menuList[0]);
             ProcessMenu(_menuList);
-
-            //ProcessMenu(mainMenu, mainMenuOption);
         }
-
+        /// <summary>
+        /// Prints logo and initial text
+        /// </summary>
         public void PrintLogo()
         {
             Console.WriteLine(snakeAscii);
@@ -58,23 +69,29 @@ namespace STUDY.Personal.SnakeGame
             Console.WriteLine();
             _mainMenuOptionLocation = Console.GetCursorPosition();
         }
-        public void PrintMenu(MenuAndOption menu)
+        /// <summary>
+        /// Prints current menu and highlight selection, it the menu is selection menu then it highligths current setting
+        /// </summary>
+        /// <param name="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        public void PrintMenu(MenuAndOption currentMenu)
         {
-            int currentMenuOption = menu.option;
+            int currentMenuOption = currentMenu.option;
             Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top);
             ClearPreviousMenu();
             Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top);
 
-            for (int i = 0; i < menu.menu.Count(); i++) {
-                Console.WriteLine(menu.menu[i]);
+            for (int i = 0; i < currentMenu.menu.Count(); i++) {
+                Console.WriteLine(currentMenu.menu[i]);
             }
 
-            HighLightMenuItem(menu);
-            if (menu.isSelectionMenu) {
-                HighLightSelection(menu);
+            HighLightMenuItem(currentMenu);
+            if (currentMenu.isSelectionMenu) {
+                HighLightSelection(currentMenu);
             }
         }
-        
+        /// <summary>
+        /// Clearing previous menu from the screen
+        /// </summary>
         public void ClearPreviousMenu()
         {
             Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top);
@@ -83,215 +100,238 @@ namespace STUDY.Personal.SnakeGame
             Console.WriteLine(new string(' ', 30));
             Console.WriteLine(new string(' ', 30));
         }
-        private void HighLightMenuItem(MenuAndOption menu)
+        /// <summary>
+        /// Highlights item user choose using arrows keys
+        /// </summary>
+        /// <param name="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        private void HighLightMenuItem(MenuAndOption currentMenu)
         {
-            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top+ menu.option);
+            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top+ currentMenu.option);
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(menu.menu[menu.option]);
+            Console.WriteLine(currentMenu.menu[currentMenu.option]);
             Console.ResetColor();
         }
+        /// <summary>
+        /// Removes highlighs from item from which user went away
+        /// </summary>
+        /// <param name="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
         private void UnHighLightMenuItem(MenuAndOption menu, bool seletion = false)
         {
-            if(seletion) {return; }
-
             Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top+ menu.option);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(menu.menu[menu.option]);
             Console.ResetColor();
         }
-        public void ProcessMenu(List<MenuAndOption> menus)
+        /// <summary>
+        /// Highlights current setting in menus which could be used to change said settings
+        /// </summary>
+        /// <param currentMenu="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        public void HighLightSelection(MenuAndOption currentMenu)
+        {
+            int optionToHighlight = currentMenu.option;
+            //size
+            if (currentMenu.menu == _menuList[2].menu)
+            {
+                //optionToHightlight is key for value which is already stored in _size
+                optionToHighlight = _sizeList.FirstOrDefault(x => x.Value == _size).Key;
+            }
+            //walkable walls
+            if (currentMenu.menu == _menuList[3].menu)
+            {
+                optionToHighlight = (_canMoveThroughWalls ? 1 : 0);
+            }
+            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top + optionToHighlight);
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(currentMenu.menu[optionToHighlight]);
+            Console.ResetColor();
+        }
+        /// <summary>
+        /// Gets user input which and performing action based on the input
+        /// </summary>
+        /// <param name="menuList">List of all available menus in the menu tree</param>
+        public void ProcessMenu(List<MenuAndOption> menuList)
         {
             ConsoleKey key;
-            MenuAndOption previousMenu = menus[_currentMenu];
-            MenuAndOption newMenu = menus[_currentMenu];
+            MenuAndOption previousMenu = menuList[_currentMenu];
+            MenuAndOption newMenu = menuList[_currentMenu];
 
             while (true) {
                 key = Console.ReadKey().Key;
-                newMenu = RotateOptions(newMenu, key);
-                if (newMenu.menu != previousMenu.menu)
+                newMenu = ProcessUserInput(newMenu, key);
+
+                if (newMenu.menu != previousMenu.menu) {
                     PrintMenu(newMenu);
-                else if(newMenu.isSelectionMenu)
+                }
+                else if (newMenu.isSelectionMenu)
+                {
                     HighLightSelection(newMenu);
-
+                }
                 previousMenu = newMenu;
-            }
-            
+            } 
         }
-
-        private MenuAndOption RotateOptions(MenuAndOption menu, ConsoleKey key)
+        /// <summary>
+        /// Perform action based on user input passed as parameter
+        /// </summary>
+        /// <param name="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        /// <param name="key">Key user pressed</param>
+        /// <returns>Instance of MenuAndOption representing current menu being processed</returns>
+        private MenuAndOption ProcessUserInput(MenuAndOption currentMenu, ConsoleKey key)
         {
-            int maxMenuOption = menu.menu.Length -1;
+            int maxMenuOption = currentMenu.menu.Length -1;
+
             if (key == ConsoleKey.DownArrow)
             {
-                UnHighLightMenuItem(menu, selection);
-                if(selection)
-                    selection = false;  
-                if (menu.option == maxMenuOption)
-                    menu.option -= maxMenuOption;
-                else
-                    menu.option++;
-
-                HighLightMenuItem(menu);
-
+                UnHighLightMenuItem(currentMenu);
+                currentMenu.option = (currentMenu.option == maxMenuOption) ? (currentMenu.option - maxMenuOption) : (currentMenu.option + 1);
+                HighLightMenuItem(currentMenu);
             }
-            if (key == ConsoleKey.UpArrow)
+            else if (key == ConsoleKey.UpArrow)
             {
-                UnHighLightMenuItem(menu, selection);
-                if (selection)
-                    selection = false;
-
-                if (menu.option == 0)
-                    menu.option += maxMenuOption;
-                else
-                    menu.option--;
-                HighLightMenuItem(menu);
+                UnHighLightMenuItem(currentMenu);
+                currentMenu.option = (currentMenu.option == 0) ? (currentMenu.option + maxMenuOption) : (currentMenu.option - 1);
+                HighLightMenuItem(currentMenu);
             }
-            
-            
-            if(key == ConsoleKey.Enter) {
-                HighLightSelection(menu);
-                menu = ProcessCurrentMenuSelection(menu);
-                PrintMenu(menu);
-                
+            else if(key == ConsoleKey.Enter) {
+                HighLightSelection(currentMenu);
+                currentMenu = ProcessCurrentMenuSelection(currentMenu);
+                PrintMenu(currentMenu);
             }
-            return menu;
+            return currentMenu;
         }
-        private MenuAndOption ProcessCurrentMenuSelection(MenuAndOption menu)
+        /// <summary>
+        /// Perform actions based on current menu being processed
+        /// </summary>
+        /// <param name="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        /// <returns>Instance of MenuAndOption updated based on user input</returns>
+        private MenuAndOption ProcessCurrentMenuSelection(MenuAndOption currentMenu)
         {
-
+            
             //main menu
-            if (menu.menu == _menuList[0].menu)
+            if (currentMenu.menu == _menuList[0].menu)
             {
-                switch (menu.option) { 
-                    case 0:
-                        StartNewGame();
-                        selection = false;
-                        //might need to clear resources
-                        break;
-                    case 1:
-                        _menuQueue.Push(menu);
-                        menu = _menuList[1];
-                        selection = false;
-                        break;
-                    case 2:
-                        Environment.Exit(0);
-                        selection = false;
-                        break;
-                }
+                currentMenu = ProcessMainMenu(currentMenu);
             }
             //settings menu
-           else if (menu == _menuList[1])
+            else if (currentMenu == _menuList[1])
             {
-                switch (menu.option)
-                {
-                    case 0:
-                        _menuQueue.Push(menu);
-                        menu = _menuList[2];
-                        selection = false;
-                        break;
-                    case 1:
-                        _menuQueue.Push(menu);
-                        menu = _menuList[3];
-                        selection = false;
-                        break;
-                    case 2:
-                        menu = _menuQueue.Pop();
-                        selection = false;
-                        break;
-
-                }
+                currentMenu = ProcessSettingsMenu(currentMenu);
             }
             //size
-            else if(menu == _menuList[2]) {
-                switch (menu.option)
-                {
-                    case 0:
-                        this.Size = (50, 20);
-                        selection = true;
-                        break;
-                    case 1:
-                        this.Size = (60, 20);
-                        selection = true;
-                        break;
-                    case 2:
-                        this.Size = (100, 20);
-                        selection = true;
-                        break;
-                    case 3:
-                        menu = _menuQueue.Pop();
-                        selection = false;
+            else if(currentMenu == _menuList[2]) {
 
-                        break;
-                }
-
+                currentMenu = ProcessSizeMenu(currentMenu);
             }
             //walkable walls
-            else if(menu == _menuList[3])
+            else if(currentMenu == _menuList[3])
             {
-                switch (menu.option)
-                {
-                    case 0:
-                        _canMoveThroughWalls = false;
-                        selection = true;
-                        break;
-                    case 1:
-                        _canMoveThroughWalls = true;
-                        selection = true;
-
-                        break;
-                    case 2:
-                        menu = _menuQueue.Pop();
-                        selection = false;
-                        break;
-                }
+                currentMenu = ProcessWalkingThroughWallsMenu(currentMenu);
             }
-            return menu;
-
-
+            return currentMenu;
         }
-        public void HighLightSelection(MenuAndOption menu)
+        /// <summary>
+        /// Perform action in the main menu based option user selected
+        /// </summary>
+        /// <param currentMenu="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        /// <returns>Instance of MenuAndOption updated based on user input</returns>
+        private MenuAndOption ProcessMainMenu(MenuAndOption currentMenu)
         {
-            int temp= menu.option;
-            //size
-            if(menu.menu == _menuList[2].menu)
+            switch (currentMenu.option)
             {
-                switch (Size) {
-                    case (50, 20): temp = 0; break;
-                    case (60, 20): temp = 1; break;
-                    case (100, 20): temp = 2; break;
-
-                }
+                case 0:
+                    PlayGame();
+                    break;
+                case 1:
+                    _menuQueue.Push(currentMenu);
+                    currentMenu = _menuList[1];//settings
+                    break;
+                case 2:
+                    Environment.Exit(0);
+                    break;
             }
-            //walls
-            if (menu.menu == _menuList[3].menu){
-                temp = (_canMoveThroughWalls ? 1 : 0);   
-            }
-            Console.SetCursorPosition(_mainMenuOptionLocation.left, _mainMenuOptionLocation.top + temp);
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(menu.menu[temp]);
-            Console.ResetColor();
+            return currentMenu;
         }
-        public void StartNewGame() {
-            Console.Clear();
+        /// <summary>
+        /// Perform action in the settins menu based option user selected
+        /// </summary>
+        /// <param currentMenu="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        /// <returns>Instance of MenuAndOption updated based on user input</returns>
+        private MenuAndOption ProcessSettingsMenu(MenuAndOption currentMenu)
+        {
+            switch (currentMenu.option)
+            {
+                case 0:
+                    _menuQueue.Push(currentMenu);
+                    currentMenu = _menuList[2]; //size
+                    break;
+                case 1:
+                    _menuQueue.Push(currentMenu);
+                    currentMenu = _menuList[3]; //walkable walls
+                    break;
+                case 2:
+                    currentMenu = _menuQueue.Pop();
+                    break;
 
-            SnakeGame game;
-                game = new SnakeGame(Size, _canMoveThroughWalls);
-                game.PlayGame();
-            if (Console.ReadKey(true).Key == ConsoleKey.Enter) {
-                Console.Clear();
-                PrintLogo();
-                PrintMenu(_menuList[0]);
-                ProcessMenu(_menuList);
+            }
+            return currentMenu;
+        }
+        /// <summary>
+        /// Perform action in the size menu based option user selected
+        /// </summary>
+        /// <param currentMenu="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        /// <returns>Instance of MenuAndOption updated based on user input</returns>
+        private MenuAndOption ProcessSizeMenu(MenuAndOption currentMenu)
+        {
+            if (currentMenu.option <= 2)
+            {
+                _size = (_sizeList[currentMenu.option].left, _sizeList[currentMenu.option].top);
             }
             else
             {
-                Environment.Exit(0);
+                currentMenu = _menuQueue.Pop();
             }
+            return currentMenu;
+        }
+        /// <summary>
+        /// Perform action in the walking through walls menu based option user selected
+        /// </summary>
+        /// <param currentMenu="currentMenu">Instance of MenuAndOption representing current menu being processed</param>
+        /// <returns>Instance of MenuAndOption updated based on user input</returns>
+        private MenuAndOption ProcessWalkingThroughWallsMenu(MenuAndOption currentMenu)
+        {
+            switch (currentMenu.option)
+            {
+                case 0:
+                    _canMoveThroughWalls = false;
+                    break;
+                case 1:
+                    _canMoveThroughWalls = true;
 
-            
+                    break;
+                case 2:
+                    currentMenu = _menuQueue.Pop();
+                    break;
+            }
+            return currentMenu;
+        }
+        /// <summary>
+        /// Prints out the logo, menu and starts processing the menu
+        /// </summary>
+        public void NewGame() {
+            Console.Clear();
+            StartMenu();
+        }
+        /// <summary>
+        /// Starts a new game using current game settings
+        /// </summary>
+        private void PlayGame()
+        {
+            Console.Clear();
+            SnakeGame game = new SnakeGame(_size, _canMoveThroughWalls);
+            game.PlayGame();
+            NewGame();
 
         }
           
