@@ -11,7 +11,7 @@ namespace STUDY.Personal.SnakeGame
 {
     internal class SnakeGame
     {
-        private readonly int _timerTick = 200;
+        private readonly int _timerTick = 100;
         private System.Timers.Timer _timer;
         private readonly char _snakeChar = '@';
         private GameBoard gameBoard { get; set; }
@@ -54,7 +54,7 @@ namespace STUDY.Personal.SnakeGame
         
         public void PlayGame()
         {
-            displayManager.PrintGameBorder();
+            displayManager.PrintGame();
 
             while (true)
             {

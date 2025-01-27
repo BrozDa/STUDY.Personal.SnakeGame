@@ -1,195 +1,252 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace STUDY.Personal.SnakeGame
 {
     
     internal class DisplayManager
     {
-        private GameBoard Board { get; init; }
-
-        private readonly string pressEnterText = ">>> Press [ENTER] to start <<<";
-        private readonly int scoreRow;
-        private readonly int scoreCol;
-        private int padding;
-        string controlsAndPauseLine;
-        int upDownArrowPosition;
-
-        
-
+        private readonly string _pressEnterText = ">>> Press [ENTER] to start <<<";
+        private readonly int _scoreRow;
+        private readonly int _scoreCol;
+        private GameBoard _board;
+        private int _padding;
+        private string _controlsAndPauseLine;
+        private int _upDownArrowPositionFromLeft;
+        /// <summary>
+        /// Manages all output to the screen
+        /// </summary>
+        /// <param name="board">GameBoard used for the game</param>
         public DisplayManager(GameBoard board)
         {
-            this.Board = board;
-            padding = (Board.Width - 2 - pressEnterText.Length) / 2;
-            controlsAndPauseLine = ControlsAndPauseLine();
-            upDownArrowPosition = controlsAndPauseLine.ToString().IndexOf(Board.ArrowLeft) + 2;
-            scoreRow = board.Height + 1;
-            scoreCol = 1 + padding + 12;
+            _board = board;
+            _padding = (_board.Width - 2 - _pressEnterText.Length) / 2;
+            _controlsAndPauseLine = GetControlsAndPauseLine();
+            _upDownArrowPositionFromLeft = _controlsAndPauseLine.IndexOf(_board.ArrowLeft) + 2;
+            _scoreRow = board.Height + 1;
+            _scoreCol = 1 + _padding + 12;
         }
-
-        public void PrintGameField()
+        /// <summary>
+        /// Prints out the gamefield and supporting menu
+        /// </summary>
+        public void PrintGame()
         {
-            string topBorder = HorizontalLinesBetweenCorners(Board.TopLeftCorner, Board.TopRightCorner);
-            string middleBorder = HorizontalLinesBetweenCorners(Board.VerticalLineWithRight, Board.VerticalLineWithLeft);
-            Console.WriteLine(topBorder);
-            PrintEmptyLineWithBorders(Board.Height - 2);
-            Console.WriteLine(middleBorder);
-        }
-        public void PrintGameBorder()
-        {
-            
-            string bottomBorder = HorizontalLinesBetweenCorners(Board.BottomLeftCorner, Board.BottomCorner);
-
-            string controlsAndPauseLine = ControlsAndPauseLine();
+            string bottomBorder = GetHorizontalLineBetweenCorners(_board.BottomLeftCorner, _board.BottomCorner);
 
             PrintGameField();
-            
             PrintEmptyLineWithBorders(1);
-            PrintCenteredText(pressEnterText);
+            PrintPressEnterText();
             PrintEmptyLineWithBorders(1);
             PrintArrowsAndControls();
             PrintEmptyLineWithBorders(1);
             Console.WriteLine(bottomBorder);
-
         }
+        /// <summary>
+        /// Prints out gamefield for the snake
+        /// </summary>
+        private void PrintGameField()
+        {
+            string topBorder = GetHorizontalLineBetweenCorners(_board.TopLeftCorner, _board.TopRightCorner);
+            string middleBorder = GetHorizontalLineBetweenCorners(_board.VerticalLineWithRight, _board.VerticalLineWithLeft);
 
-        private void PrintArrowsAndControls()
+            Console.WriteLine(topBorder);
+            PrintEmptyLineWithBorders(_board.Height - 2);
+            Console.WriteLine(middleBorder);
+        }
+        /// <summary>
+        /// Returns text with an arrow on its designated location
+        /// </summary>
+        /// <param name="arrow">character representing the arrow</param>
+        /// <returns>Empty line with arrow on its designated position</returns>
+        private string GetStringWithArrow(char arrow)
         {
             StringBuilder upArrow = new StringBuilder();
-            upArrow.Append(new string(' ', upDownArrowPosition) + Board.ArrowUp);
-            upArrow.Append(new string(' ', Board.Width - upArrow.Length - 2));
-            Console.WriteLine(WrapTextToBorders(upArrow.ToString()));
-            Console.WriteLine(WrapTextToBorders(ControlsAndPauseLine()));
+            upArrow.Append(new string(' ', _upDownArrowPositionFromLeft) + arrow);
+            upArrow.Append(new string(' ', _board.Width - upArrow.Length - 2));
 
-            StringBuilder downArrow = new StringBuilder();
-            downArrow.Append(new string(' ', upDownArrowPosition) + Board.ArrowDown);
-            downArrow.Append(new string(' ', Board.Width - downArrow.Length - 2));
-
-            Console.WriteLine(WrapTextToBorders(downArrow.ToString()));
-
-
+            return upArrow.ToString();
         }
-
-        public string ControlsAndPauseLine()
+        /// <summary>
+        /// Returns text with control, arrow and pause text
+        /// </summary>
+        /// <returns>Empty line with control, arrow and pause text on their designated positions</returns>
+        private string GetControlsAndPauseLine()
         {
             StringBuilder controlsAndPauseLine = new StringBuilder();
-            controlsAndPauseLine.Append(new string(' ', padding));
-            controlsAndPauseLine.Append("Controls: " + Board.ArrowLeft + "   " + Board.ArrowRight);
+            controlsAndPauseLine.Append(new string(' ', _padding));
+            controlsAndPauseLine.Append("Controls: " + _board.ArrowLeft + new string(' ', 3) + _board.ArrowRight);
             controlsAndPauseLine.Append("  Pause: [SPACE] ");
-            controlsAndPauseLine.Append(new string(' ', Board.Width - controlsAndPauseLine.Length - 2));
+            controlsAndPauseLine.Append(new string(' ', _board.Width - controlsAndPauseLine.Length - 2));
 
             return controlsAndPauseLine.ToString();
         }
-        private void PrintCenteredText(string text)
+        /// <summary>
+        /// Returns horizontal line in between corner characters
+        /// </summary>
+        /// <param name="leftSide">Left corner character</param>
+        /// <param name="rightSide">Right corner character</param>
+        /// <returns></returns>
+        private string GetHorizontalLineBetweenCorners(char leftSide, char rightSide)
         {
-            string centeredText = new string(' ', padding) + text + new string(' ', Board.Width - 2 - padding - text.Length);
-            Console.WriteLine(WrapTextToBorders(centeredText));
+            return leftSide + new string(_board.HorizontalLine, _board.Width - 2) + rightSide;
         }
-        public string WrapTextToBorders(string text)
+        /// <summary>
+        /// Returns text with press enter to start 
+        /// </summary>
+        /// <returns>Empty line with enter to start text on its designated positions</returns>
+        private string GetPressEnterLine()
         {
-            return Board.VerticalLine + text + Board.VerticalLine;
-        }
-        public string HorizontalLinesBetweenCorners(char leftSide, char rightSide)
-        {
-            return leftSide + new string(Board.HorizontalLine, Board.Width - 2) + rightSide;
-        }
-        public void PrintEmptyLineWithBorders(int count)
-        {
-            for (int i = 0; i < count; i++) {
-                Console.Write(Board.VerticalLine);
-                Console.Write(new string(' ', Board.Width - 2));
-                Console.Write(Board.VerticalLine);
-                Console.WriteLine();
-            }
-            
-        }
+            StringBuilder pressEnterLine = new StringBuilder();
+            pressEnterLine.Append(new string(' ', _padding) + _pressEnterText);
+            pressEnterLine.Append(new string(' ', _padding));
 
-        public void PrintApple(Apple apple) {
+            return pressEnterLine.ToString();
+        }
+        /// <summary>
+        /// Returns string with border characters on its side
+        /// </summary>
+        /// <param name="text">Text that needs to be wrapped in border characters</param>
+        /// <returns>Text wrapped in border characters</returns>
+        private string WrapTextToBorders(string text)
+        {
+            return _board.VerticalLine + text + _board.VerticalLine;
+        }
+        /// <summary>
+        /// Prints section containing contoll arrows and pause text
+        /// </summary>
+        private void PrintArrowsAndControls()
+        {
+            string upArrowLine = GetStringWithArrow(_board.ArrowUp);
+            string downArrowLine = GetStringWithArrow(_board.ArrowDown);
+
+            PrintEmptyLineWithBorders(1);
+            Console.WriteLine(WrapTextToBorders(upArrowLine));
+            Console.WriteLine(WrapTextToBorders(_controlsAndPauseLine));
+            Console.WriteLine(WrapTextToBorders(downArrowLine));
+        }
+        /// <summary>
+        /// Prints out the line with Press Enter Text in borders
+        /// </summary>
+        private void PrintPressEnterText()
+        {
+            Console.WriteLine(WrapTextToBorders(GetPressEnterLine()));
+        }
+        /// <summary>
+        /// Prints empty lines wrapped in border characters 
+        /// </summary>
+        /// <param name="count">Represent number of emptry lines</param>
+        private void PrintEmptyLineWithBorders(int count)
+        {
+            for (int i = 0; i < count; i++) 
+            {
+                Console.Write(_board.VerticalLine);
+                Console.Write(new string(' ', _board.Width - 2));
+                Console.Write(_board.VerticalLine);
+                Console.WriteLine();
+            }   
+        }
+        /// <summary>
+        /// Prints out the apple on the board in red color
+        /// </summary>
+        /// <param name="apple">Object representing the apple</param>
+        public void PrintApple(Apple apple) 
+        {
             Console.ForegroundColor = ConsoleColor.Red; 
             Console.SetCursorPosition(apple.XCoord, apple.YCoord);
             Console.Write(apple.appleCharacter);
             Console.ResetColor();   
         }
-
-        public void PrintSnake(Snake snake) {
-
-            Console.ForegroundColor = ConsoleColor.Green;
+        /// <summary>
+        /// Prints the snake on the screen
+        /// </summary>
+        /// <param name="snake">Snake which should be printed</param>
+        public void PrintSnake(Snake snake) 
+        {
             List<SnakeBodyPart> snakeBody = snake.GetSnakeBody();
-
-           // RemoveTailFromScreen(snakeBody[snakeBody.Count-1]);
-
             char headCharacter = snake.GetSnakeHeadCharacter();
             char bodyCharacter = snake.GetSnakeBodyCharacter();
 
-
-            
-
+            //snake head
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(snakeBody[0].xCoord, snakeBody[0].yCoord);
             Console.Write(headCharacter);
 
+            //rest of the body
             for (int i = 1; i < snakeBody.Count; i++)
             {
-                int x = snakeBody[i].xCoord;
-                int y = snakeBody[i].yCoord;
-                Console.SetCursorPosition(x, y);
+                Console.SetCursorPosition(snakeBody[i].xCoord, snakeBody[i].yCoord);
                 Console.Write(bodyCharacter);
             }
             Console.ResetColor();
         }
+        /// <summary>
+        /// Removes snake tail from the screen
+        /// </summary>
+        /// <param name="tail">SnakeBodyPart object representing snake's tail</param>
         public void RemoveTailFromScreen(SnakeBodyPart tail)
         {
-     
             Console.SetCursorPosition(tail.xCoord, tail.yCoord);
             Console.Write(" ");
         }
+        /// <summary>
+        /// Prints current score to the screen on its designated location
+        /// </summary>
+        /// <param name="score">Integer representing currrent score</param>
         public void PrintScore(int score)
         {
-            Console.SetCursorPosition(0, scoreRow);
+            //replace current score from the screen
+            Console.SetCursorPosition(0, _scoreRow);
             PrintEmptyLineWithBorders(1);
-            Console.SetCursorPosition(scoreCol, scoreRow);
+            //print updated score
+            Console.SetCursorPosition(_scoreCol, _scoreRow);
             Console.Write("Score: " + score);
         }
+        /// <summary>
+        /// Prints banner representing pause to the screen
+        /// </summary>
         public void PrintPauseBanner()
         {
             string banner = Properties.Resources.PauseBanner;
-            int bannerWidth = 29;
-            int bannerHeight = 6;
-           
-            int left = (Board.Width - bannerWidth)/2;
-            int top = (Board.Height - bannerHeight)/2;
+            int bannerWidth = 29; //manually set based on the string in properties
+            int bannerHeight = 6; //manually set based on the string in properties
+            (int left, int top) bannerPosition;
+            bannerPosition.left = (_board.Width - bannerWidth) / 2;
+            bannerPosition.top = (_board.Height - bannerHeight) / 2;
 
-                                                        // +2 for /r/n characters
+                                          // +2 for /r/n characters
             for (int i = 0; i < banner.Length; i += bannerWidth+2) {
-                Console.SetCursorPosition(left, top++);
+                Console.SetCursorPosition(bannerPosition.left, bannerPosition.top);
+                bannerPosition.top++;
                 Console.WriteLine(banner.Substring(i,bannerWidth));
             }
         }
+        /// <summary>
+        /// Prints banner after dying including achieved score
+        /// </summary>
+        /// <param name="score">Integer representing achieved score</param>
         public void PrintDeadBanner(int score)
         {
-
              string banner = Properties.Resources.DeadBanner;
-             int bannerWidth = 39;
-             int bannerHeight = 8;
-
+             int bannerWidth = 39;  // manually set based on the string in properties
+             int bannerHeight = 8;  // manually set based on the string in properties
              (int left, int top) bannerPosition;
-             bannerPosition.left = (Board.Width - bannerWidth) / 2;
-             bannerPosition.top = (Board.Height - bannerHeight) / 2;
-
+             bannerPosition.left = (_board.Width - bannerWidth) / 2;
+             bannerPosition.top = (_board.Height - bannerHeight) / 2;
+                                                    // +2 for /r/n characters
             for (int i = 0; i < banner.Length; i += bannerWidth + 2)
             {
-                Console.SetCursorPosition(bannerPosition.left, bannerPosition.top++);
+                Console.SetCursorPosition(bannerPosition.left, bannerPosition.top);
+                bannerPosition.top++;
                 Console.WriteLine(banner.Substring(i, bannerWidth));
             }
-            (int left, int top) scorePosition = (22,5);
+            bannerPosition.top -= bannerHeight; // setting back to default
+            (int left, int top) scorePositionInBanner = (22,5);
 
-             Console.SetCursorPosition(bannerPosition.left + scorePosition.left, bannerPosition.top-bannerHeight+scorePosition.top-2);
+             Console.SetCursorPosition(bannerPosition.left + scorePositionInBanner.left, bannerPosition.top+scorePositionInBanner.top-2);
              Console.Write(score);
-             Console.SetCursorPosition(0, 0);
         }
+        /// <summary>
+        /// Clears any banner from the field
+        /// </summary>
         public void ClearBanner()
         {
             Console.SetCursorPosition(0, 0);
