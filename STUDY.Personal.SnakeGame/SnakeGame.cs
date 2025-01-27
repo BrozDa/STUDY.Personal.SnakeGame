@@ -44,7 +44,7 @@ namespace STUDY.Personal.SnakeGame
 
             snake = new Snake(gameBoard, inputManager, direction, canMoveThroughWalls);
 
-            apple = new Apple();
+            apple = new Apple(gameBoard, snake);
             
             _timer = new System.Timers.Timer();
             this.canMoveThroughWalls = canMoveThroughWalls;
@@ -61,7 +61,7 @@ namespace STUDY.Personal.SnakeGame
                 if (Console.ReadKey(false).Key == ConsoleKey.Enter)
                     break;
             }
-            apple.GenerateNewApple(gameBoard, snake);
+            apple.GenerateNewApple();
             displayManager.PrintApple(apple);
             displayManager.PrintScore(_score);
 
@@ -164,7 +164,7 @@ namespace STUDY.Personal.SnakeGame
                 //if apple was eaten then we need to generate and print new apple
                 if (appleEaten)
                 {
-                    apple.GenerateNewApple(gameBoard, snake);
+                    apple.GenerateNewApple();
                     displayManager.PrintApple(apple);
                     _score++;
                     displayManager.PrintScore(_score);
@@ -178,7 +178,7 @@ namespace STUDY.Personal.SnakeGame
         }
         private bool CompareHeadAndApplePositions(Apple apple, SnakeBodyPart snakeHead)
         {
-            return apple.xCoord == snakeHead.xCoord && apple.yCoord == snakeHead.yCoord;
+            return apple.XCoord == snakeHead.xCoord && apple.YCoord == snakeHead.yCoord;
         }
         
         

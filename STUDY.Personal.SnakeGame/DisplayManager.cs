@@ -110,7 +110,7 @@ namespace STUDY.Personal.SnakeGame
 
         public void PrintApple(Apple apple) {
             Console.ForegroundColor = ConsoleColor.Red; 
-            Console.SetCursorPosition(apple.xCoord, apple.yCoord);
+            Console.SetCursorPosition(apple.XCoord, apple.YCoord);
             Console.Write(apple.appleCharacter);
             Console.ResetColor();   
         }

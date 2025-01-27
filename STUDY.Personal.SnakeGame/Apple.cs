@@ -8,33 +8,40 @@ namespace STUDY.Personal.SnakeGame
 {
     internal class Apple
     {
+        private int _xCoord;
+        private int _yCoord;
 
-        public int xCoord { get; set; }
-        public int yCoord { get; set; }
+        private GameBoard _board;
+        private Snake _snake;
+        public int XCoord { get { return _xCoord; } }
+        public int YCoord { get { return _yCoord; } }
 
-        public char appleCharacter = '\u00F3';
-        public Apple()
+
+
+        public readonly char appleCharacter = '\u00F3'; //ó
+        public Apple(GameBoard board, Snake snake)
         {
+            _board = board;
+            _snake = snake;
         }
 
-        public void GenerateNewApple(GameBoard board, Snake snake)
+        public void GenerateNewApple()
         {
             Random random = new Random();
-            
             do
             {
-                xCoord = random.Next(1, board.Width-1);
-                yCoord = random.Next(1, board.Height-1);
+                _xCoord = random.Next(1, _board.Width-1);
+                _yCoord = random.Next(1, _board.Height-1);
 
-            } while (!CheckIfValidPositionForApple(xCoord, yCoord, snake));
-    
+            } while (!CheckIfValidPositionForApple());
         }
 
-        public bool CheckIfValidPositionForApple(int appleXCoord, int appleYCoord, Snake snake) {
-            List<SnakeBodyPart> snakeBody = snake.GetSnakeBody();
+        public bool CheckIfValidPositionForApple() {
+            List<SnakeBodyPart> snakeBody = _snake.GetSnakeBody();
+
             foreach (SnakeBodyPart sbpPart in snakeBody)
             {
-                if (sbpPart.xCoord == appleXCoord && sbpPart.yCoord == appleYCoord)
+                if (sbpPart.xCoord == _xCoord && sbpPart.yCoord == _yCoord)
                     return false;
             }
             return true;
