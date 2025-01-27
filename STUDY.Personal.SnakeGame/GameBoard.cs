@@ -26,8 +26,8 @@
         /// <summary>
         /// Represents game field for the snake game
         /// </summary>
-        /// <param name="width">Interer value representing width of game field</param>
-        /// <param name="height">Interer value representing height of game field</param>
+        /// <param name="width">Integer value representing width of game field</param>
+        /// <param name="height">Integer value representing height of game field</param>
         public GameBoard(int width, int height)
         {
             _width = width;
