@@ -100,21 +100,21 @@
         /// <returns><see cref="SnakeBodyPart"/> object representing new head based on passed direction</returns>
         public SnakeBodyPart GetNewHeadObject(Direction direction)
         {
-            SnakeBodyPart newHead = new SnakeBodyPart(SnakeHead.xCoord, SnakeHead.yCoord);
+            SnakeBodyPart newHead = new SnakeBodyPart(SnakeHead.XCoord, SnakeHead.YCoord);
 
             switch (direction) 
             { 
                 case Direction.Up:
-                    newHead.yCoord -= 1;
+                    newHead.YCoord -= 1;
                     break;
                 case Direction.Down:
-                    newHead.yCoord += 1;
+                    newHead.YCoord += 1;
                     break;
                 case Direction.Right:
-                    newHead.xCoord += 1;
+                    newHead.XCoord += 1;
                     break;
                 case Direction.Left:
-                    newHead.xCoord -= 1;
+                    newHead.XCoord -= 1;
                     break;
             }
             return newHead;
@@ -164,8 +164,8 @@
             }
             else
             {
-                return ((newHeadPosition.xCoord > 0 && newHeadPosition.xCoord < _board.Width - 1)
-                && (newHeadPosition.yCoord > 0 && newHeadPosition.yCoord < _board.Height - 1));
+                return ((newHeadPosition.XCoord > 0 && newHeadPosition.XCoord < _board.Width - 1)
+                && (newHeadPosition.YCoord > 0 && newHeadPosition.YCoord < _board.Height - 1));
             }
         }
         /// <summary>
@@ -174,21 +174,21 @@
         /// <param name="newHeadPosition"><see cref="SnakeBodyPart"/>  object representing new snake head position</param>
         private void TeleportToOtherSideIfInWall(SnakeBodyPart newHeadPosition)
         {
-            if(newHeadPosition.xCoord == 0)
+            if(newHeadPosition.XCoord == 0)
             {
-                newHeadPosition.xCoord = _board.Width - 2;
+                newHeadPosition.XCoord = _board.Width - 2;
             }
-            else if (newHeadPosition.yCoord == 0)
+            else if (newHeadPosition.YCoord == 0)
             {
-                newHeadPosition.yCoord = _board.Height - 2;
+                newHeadPosition.YCoord = _board.Height - 2;
             }
-            else if (newHeadPosition.xCoord == _board.Width - 1)
+            else if (newHeadPosition.XCoord == _board.Width - 1)
             {
-                newHeadPosition.xCoord = 1;
+                newHeadPosition.XCoord = 1;
             }
-            else if (newHeadPosition.yCoord == _board.Height - 1)
+            else if (newHeadPosition.YCoord == _board.Height - 1)
             {
-                newHeadPosition.yCoord = 1;
+                newHeadPosition.YCoord = 1;
             }
         }
         /// <summary>

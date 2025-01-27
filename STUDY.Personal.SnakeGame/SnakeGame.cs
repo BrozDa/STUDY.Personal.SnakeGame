@@ -178,7 +178,7 @@ namespace STUDY.Personal.SnakeGame
         }
         private bool CompareHeadAndApplePositions(Apple apple, SnakeBodyPart snakeHead)
         {
-            return apple.XCoord == snakeHead.xCoord && apple.YCoord == snakeHead.yCoord;
+            return apple.XCoord == snakeHead.XCoord && apple.YCoord == snakeHead.YCoord;
         }
         
         

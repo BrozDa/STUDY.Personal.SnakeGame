@@ -47,7 +47,7 @@
 
             foreach (SnakeBodyPart sbpPart in snakeBody)
             {
-                if (sbpPart.xCoord == _xCoord && sbpPart.yCoord == _yCoord)
+                if (sbpPart.XCoord == _xCoord && sbpPart.YCoord == _yCoord)
                     return false;
             }
             return true;

@@ -167,13 +167,13 @@ namespace STUDY.Personal.SnakeGame
 
             //snake head
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.SetCursorPosition(snakeBody[0].xCoord, snakeBody[0].yCoord);
+            Console.SetCursorPosition(snakeBody[0].XCoord, snakeBody[0].YCoord);
             Console.Write(snake.HeadCharacter);
 
             //rest of the body
             for (int i = 1; i < snakeBody.Count; i++)
             {
-                Console.SetCursorPosition(snakeBody[i].xCoord, snakeBody[i].yCoord);
+                Console.SetCursorPosition(snakeBody[i].XCoord, snakeBody[i].YCoord);
                 Console.Write(snake.BodyCharacter);
             }
             Console.ResetColor();
@@ -184,7 +184,7 @@ namespace STUDY.Personal.SnakeGame
         /// <param name="tail">SnakeBodyPart object representing snake's tail</param>
         public void RemoveTailFromScreen(SnakeBodyPart tail)
         {
-            Console.SetCursorPosition(tail.xCoord, tail.yCoord);
+            Console.SetCursorPosition(tail.XCoord, tail.YCoord);
             Console.Write(" ");
         }
         /// <summary>
