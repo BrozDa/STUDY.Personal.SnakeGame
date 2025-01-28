@@ -61,15 +61,14 @@ namespace STUDY.Personal.SnakeGame.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ╔═════════════════════════════════════╗
-        ///║                                     ║
-        ///║            You are dead!            ║
-        ///║              Score:                 ║
-        ///║  Press [Enter] to start a new game  ║
-        ///║       or anything else to exit      ║
-        ///║                                     ║
-        ///╚═════════════════════════════════════╝
-        ///.
+        ///   Looks up a localized string similar to ╔════════════════════════════════════════╗
+        ///║                                        ║
+        ///║              You are dead!             ║
+        ///║              Score:                    ║
+        ///║  Press [Enter] to return to main menu  ║
+        ///║       or anything else to exit         ║
+        ///║                                        ║
+        ///╚════════════════════════════════════════╝.
         /// </summary>
         internal static string DeadBanner {
             get {

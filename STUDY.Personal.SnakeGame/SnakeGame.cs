@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Drawing;
+using System.Timers;
 
 namespace STUDY.Personal.SnakeGame
 {
@@ -8,11 +9,12 @@ namespace STUDY.Personal.SnakeGame
     internal class SnakeGame
     {
         private readonly int _timerTick = 100;
-        private readonly GameBoard _gameBoard;
         private readonly InputManager _inputManager;
-        private readonly DisplayManager _displayManager;
-        private readonly Snake _snake;
-        private readonly Apple _apple;
+        private readonly MainMenu _menu;
+        private GameBoard? _gameBoard;
+        private DisplayManager? _displayManager;
+        private Snake? _snake;
+        private Apple? _apple;
         private System.Timers.Timer _timer;
         private int _score = 0;
         private Direction _direction = Direction.Right;
@@ -20,12 +22,18 @@ namespace STUDY.Personal.SnakeGame
         private bool _snakeAlive = true;
         private bool _isPaused = false;
 
+        public SnakeGame()
+        {;
+            _inputManager = new InputManager(_direction);
+            _timer = new System.Timers.Timer();
+            _menu = new MainMenu(this);
+        }
         /// <summary>
         /// Initializes new object of Snake Game class
         /// </summary>
         /// <param name="size">(<see cref="int"/>,<see cref="int"/> tuple representing size of the <see cref="GameBoard"/></param>
         /// <param name="canMoveThroughWalls"><see cref="bool"/> value indicating if snake is able to move through walls</param>
-        public SnakeGame((int width, int height) size, bool canMoveThroughWalls)
+        /*public SnakeGame((int width, int height) size, bool canMoveThroughWalls)
         {
             _gameBoard = new GameBoard(size.width, size.height);
             _inputManager = new InputManager(_direction);
@@ -33,12 +41,26 @@ namespace STUDY.Personal.SnakeGame
             _snake = new Snake(_gameBoard, _direction, canMoveThroughWalls);
             _apple = new Apple(_gameBoard, _snake);       
             _timer = new System.Timers.Timer();
-        }
+            _menu = new MainMenu(this);
+        }*/
         /// <summary>
         /// Prints game field, awaits user input to start the game and generates all necessities to start the game
         /// </summary>
-        private void SetupNewGame()
+        public void UpdateSnakeGameSettings(int boardHeight, int boardWidth, bool canMoveThroughWalls)
         {
+            _gameBoard = new GameBoard(boardHeight, boardWidth);
+            _displayManager = new DisplayManager(_gameBoard);
+            _snake = new Snake(_gameBoard, _direction, canMoveThroughWalls);
+            _apple = new Apple(_gameBoard, _snake);
+            
+        }
+        private void SetupNewRound()
+        {
+            if(_displayManager == null || _apple == null || _snake == null)
+            {
+                throw new NullReferenceException("Null object refered in SnakeGame.SetupNewRound()");
+            }
+
             _displayManager.PrintGame();
 
             while (true)
@@ -55,11 +77,23 @@ namespace STUDY.Personal.SnakeGame
               
         }
         /// <summary>
+        /// Starts the game of Snake
+        /// </summary>
+        public void StartGame()
+        {
+            _menu.StartMenu();
+        }
+        /// <summary>
         /// Represents game loop for the Snake game
         /// </summary>
         public void PlayGame()
         {
-            SetupNewGame();
+            if (_displayManager == null || _timer == null)
+            {
+                throw new NullReferenceException("Null object refered in SnakeGame.PlayGame()");
+            }
+
+            SetupNewRound();
             SetupTimer(_timerTick);
 
             while (_snakeAlive){ 
@@ -67,7 +101,8 @@ namespace STUDY.Personal.SnakeGame
             }
             _timer.Stop();
             _displayManager.PrintDeadBanner(_score);
-            Console.ReadKey(true);   
+            _inputManager.ProcessEndGame();
+
         }
         
         /// <summary>
@@ -114,6 +149,11 @@ namespace STUDY.Personal.SnakeGame
         /// </summary>
         private void PauseGame()
         {
+            if (_displayManager == null)
+            {
+                throw new NullReferenceException("Null object refered in SnakeGame.PauseGame()");
+            }
+
             _isPaused = true;
             _directionBeforePause = _direction;
             _displayManager.PrintPauseBanner();
@@ -123,22 +163,33 @@ namespace STUDY.Personal.SnakeGame
         /// </summary>
         private void ResumeGame() 
         {
+            if (_displayManager == null || _apple == null)
+            {
+                throw new NullReferenceException("Null object refered in SnakeGame.ResumeGame()");
+            }
+
             _isPaused = false;
             _direction = _directionBeforePause;
             _displayManager.ClearBanner();
             _displayManager.PrintApple(_apple);
             ProcessSnake(_direction);
         }
+        
         /// <summary>
         /// Move snake, checks if the position is valid, eg. Snake is not dead, checks if apple was eaten and update all necessary details accordingly
         /// </summary>
         /// <param name="newDirection"><see cref="Direction"/>value representing the direction of a snake</param>
         private void ProcessSnake(Direction newDirection)
         {
+            if(_snake == null || _apple == null || _displayManager == null)
+            {
+                throw new NullReferenceException("Null object refered in SnakeGame.ProcessSnake()");
+            }
+
             _direction = newDirection;
             //check user input for direction
             _snake.UpdateSnakeDirection(newDirection);
-            _snake.UpdateSnakeHeadCharacter(_direction);
+
             //calculate new position for head of the snake
             SnakeBodyPart newHead = _snake.GetNewHeadObject(_snake.CurrentDirection);
 

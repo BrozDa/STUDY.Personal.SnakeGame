@@ -11,10 +11,11 @@
         private readonly string[] _mainMenu = {"  << Start a new game >>", "  << Settings >>", "  << Exit >>" };
         private readonly string[] _settingMenu = { "  << Size >>", "  << Moving Through Walls >>  ", "  << Exit to main menu >>  " };
         private readonly string[] _sizeMenu = { "  << Small >>", "  << Medium >>  ", "  << Large >>  ", "  << Exit >>  " };
-        private readonly string[] _movingThroughWallsMenu = { "  << Enabled >>", "  << Disabled >>  ", "  << Exit >>  " };
+        private readonly string[] _movingThroughWallsMenu = {  "  << Disabled >>  ", "  << Enabled >>", "  << Exit >>  " };
         private Stack<MenuAndOption> _menuQueue = new Stack<MenuAndOption>();
         private List<MenuAndOption> _menuList = new List<MenuAndOption>();
         private Dictionary<int, (int left, int top)> _sizeList = new Dictionary<int, (int left, int top)>();
+        private SnakeGame _snakeGame;
         private int _currentMenu = 0;
         private (int left, int top) _mainMenuOptionLocation = (0, 0); //position where menu should be printed, properly initialized in PrintLogo method
         private (int width, int height) _size = (50, 20);
@@ -23,11 +24,12 @@
         /// <summary>
         /// Initializes a new instance of the Main Menu class
         /// </summary>
-        public MainMenu()
+        public MainMenu(SnakeGame snakeGame)
         {
             InitializeMenuList();
             InitializeSizeList();
             Console.CursorVisible = false;
+            _snakeGame = snakeGame;
         }
         /// <summary>
         /// Initializes MenuList with all of its current options
@@ -159,7 +161,7 @@
             MenuAndOption newMenu = menuList[_currentMenu];
 
             while (true) {
-                key = Console.ReadKey().Key;
+                key = Console.ReadKey(true).Key;
                 newMenu = ProcessUserInput(newMenu, key);
 
                 if (newMenu.MenuList != previousMenu.MenuList) {
@@ -329,8 +331,8 @@
         private void PlayGame()
         {
             Console.Clear();
-            SnakeGame game = new SnakeGame(_size, _canMoveThroughWalls);
-            game.PlayGame();
+            _snakeGame.UpdateSnakeGameSettings(_size.width, _size.height, _canMoveThroughWalls);
+            _snakeGame.PlayGame();
             NewGame();
 
         }
