@@ -26,6 +26,9 @@ namespace STUDY.Personal.SnakeGame
             _upDownArrowPositionFromLeft = _controlsAndPauseLine.IndexOf(_board.ArrowLeft) + 2;
             _scoreRow = board.Height + 1;
             _scoreCol = 1 + _padding + 12;
+
+            Console.CursorVisible = false;
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
         }
         /// <summary>
         /// Prints out the gamefield and supporting menu
