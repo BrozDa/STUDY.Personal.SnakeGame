@@ -1,99 +1,91 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using System.Timers;
 
 namespace STUDY.Personal.SnakeGame
 {
     internal class SnakeGame
     {
         private readonly int _timerTick = 100;
-        private System.Timers.Timer _timer;
-        private readonly char _snakeChar = '@';
-        private GameBoard gameBoard { get; set; }
-        private Snake snake { get; set; }
-
-        private Apple apple;
-
+        private readonly System.Timers.Timer _timer;
+        private readonly GameBoard _gameBoard;
+        private readonly Snake _snake;
+        private readonly InputManager _inputManager;
+        private readonly DisplayManager _displayManager;
+        private readonly Apple _apple;
         private int _score = 0;
-
         private Direction direction = Direction.Right;
         private Direction beforePause;
-
-        private InputManager inputManager { get; set; }
-        private DisplayManager displayManager { get; set; }
-
-        private bool snakeAlive = true;
+        private bool _snakeAlive = true;
         private bool _isPaused = false;
-        private bool canMoveThroughWalls;
 
+        /// <summary>
+        /// Initializes new instance of Snake Game class
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="canMoveThroughWalls"></param>
         public SnakeGame((int width, int height) size, bool canMoveThroughWalls)
         {
-            Console.CursorVisible = false;
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-            gameBoard = new GameBoard(size.width, size.height);
-
-            inputManager = new InputManager(direction);
-
-            displayManager = new DisplayManager(gameBoard);
-
-            snake = new Snake(gameBoard, direction, canMoveThroughWalls);
-
-            apple = new Apple(gameBoard, snake);
-            
+            _gameBoard = new GameBoard(size.width, size.height);
+            _inputManager = new InputManager(direction);
+            _displayManager = new DisplayManager(_gameBoard);
+            _snake = new Snake(_gameBoard, direction, canMoveThroughWalls);
+            _apple = new Apple(_gameBoard, _snake);
             _timer = new System.Timers.Timer();
-            this.canMoveThroughWalls = canMoveThroughWalls;
-
 
         }
-        
+        /// <summary>
+        /// Starts the game loop and manages it until the snake is dead
+        /// </summary>
         public void PlayGame()
         {
-            displayManager.PrintGame();
+
+            SetupNewGame();
+            SetupTimer(_timerTick);
+            _displayManager.PrintSnake(_snake);
+
+            while (_snakeAlive)
+            {
+                //ongoing game loop, goes until the snake is alive
+            }
+
+            _displayManager.PrintDeadBanner(_score);
+            Console.ReadKey(true);
+            _timer.Stop();  
+
+        }
+        /// <summary>
+        /// Setups componends to the new game of Snake
+        /// </summary>
+        private void SetupNewGame()
+        {
+            _displayManager.PrintGame();
 
             while (true)
             {
                 if (Console.ReadKey(false).Key == ConsoleKey.Enter)
                     break;
             }
-            apple.GenerateNewApple();
-            displayManager.PrintApple(apple);
-            displayManager.PrintScore(_score);
-
-            SetupTimer(_timerTick);
-            displayManager.PrintSnake(snake);
-
-            while (snakeAlive)
-            {
-                
-            }
-            displayManager.PrintSnake(snake);
-
-            
-            displayManager.PrintDeadBanner(_score);
-            Console.ReadKey(true);
-            _timer.Stop();  
-
+            _apple.GenerateNewApple();
+            _displayManager.PrintApple(_apple);
+            _displayManager.PrintScore(_score);
         }
-        public void SetupTimer(int timerTick)
+        /// <summary>
+        /// Initializes all necessary components of the timer
+        /// </summary>
+        /// <param name="timerTick"><see cref="System.Timers.Timer "/> interval, representing the game tick</param>
+        private void SetupTimer(int timerTick)
         {
-            
             _timer.Enabled = true;
             _timer.AutoReset = false;
             _timer.Interval = timerTick;
             _timer.Elapsed += GameTick;
-            
-           
         }
-
+        /// <summary>
+        /// <see cref="System.Timers.Timer"/> elapsed event handler representing game tick
+        /// After every tick, the game checks user input, validates it and update output accordingly
+        /// </summary>
         private void GameTick(object? sender, ElapsedEventArgs e)
         {
-            Direction newDirection = inputManager.ProcessUserInput(_isPaused);
+            Direction newDirection = _inputManager.ProcessUserInput(_isPaused);
 
             //Do nothing
             if (newDirection == Direction.Stand) { }
@@ -107,75 +99,80 @@ namespace STUDY.Personal.SnakeGame
             else if (!_isPaused && newDirection == Direction.Pause)
             {
                 PauseGame();
-                
             }
             // User is playing
             else
             {
-                PlayRound(newDirection);
+                ProcessSnake(newDirection);
                 Console.SetCursorPosition(0, 0);
-                
-                //direction = newDirection;
-                //ProcessSnake(newDirection);
-
             }
-
             _timer.Start();
-
-
         }
+        /// <summary>
+        /// Manages user request to pause the game
+        /// </summary>
         private void PauseGame(){
             _isPaused = true;
             beforePause = direction;
-            displayManager.PrintPauseBanner();
+            _displayManager.PrintPauseBanner();
         }
+        /// <summary>
+        /// Manages user request to resume the game
+        /// </summary>
         private void ResumeGame() {
             _isPaused = false;
             direction = beforePause;
-            displayManager.ClearBanner();
-            displayManager.PrintApple(apple);
+            _displayManager.ClearBanner();
+            _displayManager.PrintApple(_apple);
             ProcessSnake(direction);
         }
-        private void PlayRound(Direction newDirection) {
-            direction = newDirection;
-            ProcessSnake(newDirection);
-        }
-
+        /// <summary>
+        /// Takes <see cref="Direction"/> argument, and checks whether position of snake by following this direction is valid and update output accordingly
+        /// Checks whether snake didnt hit a wall, ate himself or ate apple
+        /// </summary>
+        /// <param name="newDirection"><see cref="Direction"/> value representing new direction taken from user input</param>
         private void ProcessSnake(Direction newDirection)
         {
+            direction = newDirection;
             //check user input for direction
-            snake.UpdateSnakeDirection(newDirection);
-            snake.UpdateSnakeHeadCharacter(direction);
+            _snake.UpdateSnakeDirection(newDirection);
+            _snake.UpdateSnakeHeadCharacter(direction);
             //calculate new position for head of the snake
-            SnakeBodyPart newHead = snake.GetNewHeadObject(snake.CurrentDirection);
+            SnakeBodyPart newHead = _snake.GetNewHeadObject(_snake.CurrentDirection);
 
             //check if snake didnt crash to wall or ate himself
-            bool validPositionForNewHead = snake.ValidateNewHeadPosition(newHead);
+            bool validPositionForNewHead = _snake.ValidateNewHeadPosition(newHead);
 
             if (validPositionForNewHead == false)
             {
-                snakeAlive = false;
+                _snakeAlive = false;
             }
             else
             {
                 //check if the apple was eaten - eg position of head == position of apple
-                bool appleEaten = CompareHeadAndApplePositions(apple, newHead);
+                bool appleEaten = CompareHeadAndApplePositions(_apple, newHead);
 
                 //if apple was eaten then we need to generate and print new apple
                 if (appleEaten)
                 {
-                    apple.GenerateNewApple();
-                    displayManager.PrintApple(apple);
+                    _apple.GenerateNewApple();
+                    _displayManager.PrintApple(_apple);
                     _score++;
-                    displayManager.PrintScore(_score);
+                    _displayManager.PrintScore(_score);
                 }
                 //update snake with position of head
                 //if apple was eaten then we do not remove tail
-                displayManager.RemoveTailFromScreen(snake.SnakeTail);
-                snake.UpdateSnake(newHead, appleEaten);
-                displayManager.PrintSnake(snake);
+                _displayManager.RemoveTailFromScreen(_snake.SnakeTail);
+                _snake.UpdateSnake(newHead, appleEaten);
+                _displayManager.PrintSnake(_snake);
             }
         }
+        /// <summary>
+        /// Check if apple and snake head are on same position - if snake ate apple
+        /// </summary>
+        /// <param name="apple"><see cref="Apple"/> object for comparison</param>
+        /// <param name="snakeHead"><see cref="SnakeBodyPart"/> object representing snake head</param>
+        /// <returns><see cref="bool"/>true, if apple was eaten</returns>
         private bool CompareHeadAndApplePositions(Apple apple, SnakeBodyPart snakeHead)
         {
             return apple.XCoord == snakeHead.XCoord && apple.YCoord == snakeHead.YCoord;
