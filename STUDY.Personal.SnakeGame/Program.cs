@@ -10,8 +10,8 @@
             /*DisplayManager manageris = new DisplayManager(new GameBoard(50, 20, ' '));
             manageris.PrintDeadBanner(0);
             Console.ReadLine(); */
-            SnakeGame game = new SnakeGame();
-            game.StartGame();
+            MainMenu menu = new MainMenu();
+            menu.NewGame();
             Console.ReadLine(); 
         }
     }

@@ -26,7 +26,6 @@ namespace STUDY.Personal.SnakeGame
             _upDownArrowPositionFromLeft = _controlsAndPauseLine.IndexOf(_board.ArrowLeft) + 2;
             _scoreRow = board.Height + 1;
             _scoreCol = 1 + _padding + 12;
-            
 
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -230,7 +229,7 @@ namespace STUDY.Personal.SnakeGame
         public void PrintDeadBanner(int score)
         {
              string banner = Properties.Resources.DeadBanner;
-             int bannerWidth = 42;  // manually set based on the string in properties
+             int bannerWidth = 39;  // manually set based on the string in properties
              int bannerHeight = 8;  // manually set based on the string in properties
              (int left, int top) bannerPosition;
              bannerPosition.left = (_board.Width - bannerWidth) / 2;

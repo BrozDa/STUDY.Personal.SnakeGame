@@ -37,19 +37,6 @@
                 return _direction;
             }
         }
-        public void ProcessEndGame()
-        {
-            ConsoleKey userInput = Console.ReadKey(true).Key;
-            if (userInput != ConsoleKey.Enter)
-            {
-                Console.SetCursorPosition(0, 29);
-                Environment.Exit(0);
-            }
-            else 
-            {
-                return;
-            }
-        }
         /// <summary>
         /// Checks user input and returns respective <see cref="ConsoleKey"/> value
         /// </summary>
