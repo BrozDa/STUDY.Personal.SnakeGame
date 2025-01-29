@@ -66,6 +66,7 @@
         public void UpdateSnakeDirection(Direction newDirection)
         {
             _currentDirection = ValidateNewDirection(_currentDirection, newDirection);
+            UpdateSnakeHeadCharacter(_currentDirection);
         }
         /// <summary>
         /// Validates <see cref="Direction"/> value taken from user input and validates it in a way that snake cannot perform 180 turn in one input

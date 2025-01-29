@@ -20,6 +20,9 @@ namespace STUDY.Personal.SnakeGame
         /// <param name="board">GameBoard used for the game</param>
         public DisplayManager(GameBoard board)
         {
+            Console.CursorVisible = false;
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
             _board = board;
             _padding = (_board.Width - 2 - _pressEnterText.Length) / 2;
             _controlsAndPauseLine = GetControlsAndPauseLine();
