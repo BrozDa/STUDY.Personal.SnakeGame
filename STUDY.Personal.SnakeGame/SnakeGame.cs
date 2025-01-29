@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Timers;
+﻿using System.Timers;
 
 namespace STUDY.Personal.SnakeGame
 {
@@ -33,22 +32,7 @@ namespace STUDY.Personal.SnakeGame
             _displayManager = new DisplayManager(_gameBoard);
             _snake = new Snake(_gameBoard, direction, canMoveThroughWalls);
             _apple = new Apple(_gameBoard, _snake);
-            inputManager = new InputManager(direction);
-
-            displayManager = new DisplayManager(gameBoard);
-
-            snake = new Snake(gameBoard, direction, canMoveThroughWalls);
-
-            apple = new Apple(gameBoard, snake);
-            
-            inputManager = new InputManager(direction);
-
-            displayManager = new DisplayManager(gameBoard);
-
-            snake = new Snake(gameBoard, direction, canMoveThroughWalls);
-
-            apple = new Apple(gameBoard, snake);
-            
+            _inputManager = new InputManager(direction);
             _timer = new System.Timers.Timer();
 
         }
