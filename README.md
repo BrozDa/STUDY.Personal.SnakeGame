@@ -10,5 +10,5 @@ Main issues:
 1. Whole game is run from Main menu
 2. Snake is not getting faster over time - not hard to implement, just did not figure out nice algorithm to gradually increase speed which would work over longer time
 
-https://github.com/user-attachments/assets/3e16a9c4-a388-4cdc-8c1e-e79a828cc833
+https://github.com/user-attachments/assets/07211b8d-280a-49c3-bdf8-72a4d34e59a0
 
