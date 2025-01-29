@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Diagnostics;
+using System.Timers;
 
 namespace STUDY.Personal.SnakeGame
 {
@@ -46,11 +47,7 @@ namespace STUDY.Personal.SnakeGame
             {
                 //ongoing game loop, goes until the snake is alive
             }
-
-            _displayManager.PrintDeadBanner(_score);
-            Console.ReadKey(true);
-            _timer.Stop();  
-
+            ProcessSnakeDeath();
         }
         /// <summary>
         /// Setups componends to the new game of Snake
@@ -61,7 +58,7 @@ namespace STUDY.Personal.SnakeGame
 
             while (true)
             {
-                if (Console.ReadKey(false).Key == ConsoleKey.Enter)
+                if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                     break;
             }
             _apple.GenerateNewApple();
@@ -133,10 +130,10 @@ namespace STUDY.Personal.SnakeGame
         /// <param name="newDirection"><see cref="Direction"/> value representing new direction taken from user input</param>
         private void ProcessSnake(Direction newDirection)
         {
-            direction = newDirection;
+            //direction = newDirection;
             //check user input for direction
             _snake.UpdateSnakeDirection(newDirection);
-            _snake.UpdateSnakeHeadCharacter(direction);
+            
             //calculate new position for head of the snake
             SnakeBodyPart newHead = _snake.GetNewHeadObject(_snake.CurrentDirection);
 
@@ -176,6 +173,16 @@ namespace STUDY.Personal.SnakeGame
         private bool CompareHeadAndApplePositions(Apple apple, SnakeBodyPart snakeHead)
         {
             return apple.XCoord == snakeHead.XCoord && apple.YCoord == snakeHead.YCoord;
+        }
+        private void ProcessSnakeDeath()
+        {
+            _displayManager.PrintDeadBanner(_score);
+            _timer.Stop();
+            if(Console.ReadKey(true).Key != ConsoleKey.Enter)
+            {
+                Console.SetCursorPosition(0, 29);
+                Environment.Exit(0);
+            }     
         }
         
         
