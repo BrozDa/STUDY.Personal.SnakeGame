@@ -2,8 +2,11 @@
 
 This project started as a simple Snake game written in a single class. Over the course of several weeks, it gradually evolved into its current state. While there are still many areas for improvement, I’ve decided to shift my focus to other projects for now.
 
-The game window and core mechanics are inspired by Yordan Yordanov’s video: https://www.youtube.com/watch?v=NXLo5_5xDm8
-The arrow-controlled menu is inspired by Michael Hadley’s video: https://www.youtube.com/watch?v=qAWhGEPMlS8
+The game window and core mechanics are inspired by Yordan Yordanov’s video: 
+https://www.youtube.com/watch?v=NXLo5_5xDm8
+
+The arrow-controlled menu is inspired by Michael Hadley’s video: 
+https://www.youtube.com/watch?v=qAWhGEPMlS8
 
 ## Game Features
 
